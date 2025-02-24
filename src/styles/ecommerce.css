@@ -1,0 +1,48 @@
+.ecommerce-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    text-align: center;
+  }
+  
+  .filter-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .product-item {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  
+  .product-name {
+    margin: 0;
+  }
+  
+  .product-description {
+    margin: 0.5rem 0;
+  }
+  
+  .product-price,
+  .product-brand {
+    margin: 0.25rem 0;
+  }
