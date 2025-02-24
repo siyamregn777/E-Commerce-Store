@@ -1,0 +1,17 @@
+.high{
+  padding: 0%;
+  margin: 0%;
+}
+
+.high h1{
+  text-align: center;
+  font-size: 2em;
+}
+
+.high p{
+  text-align: center;
+  font-size: 1.2em;
+  color: white;
+  margin-top: 30px;
+
+}
