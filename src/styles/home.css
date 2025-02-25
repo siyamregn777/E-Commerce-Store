@@ -1,17 +1,38 @@
-.high{
-  padding: 0%;
-  margin: 0%;
+.high {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ensure it covers the full viewport height */
 }
 
-.high h1{
-  text-align: center;
-  font-size: 2em;
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.high p{
+.image {
+  object-fit: cover; /* Ensure the image covers the entire container */
+  width: 100%;
+  height: 100%;
+}
+
+.text {
+  position: absolute;
+  z-index: 10;
+  color: white; /* Set text color to white for visibility over the image */
   text-align: center;
+  top: 50%; /* Vertically center the text */
+  left: 50%; /* Horizontally center the text */
+  transform: translate(-50%, -50%); /* Offset the centering for perfect alignment */
+}
+
+.high h1 {
+  font-size: 2.5em;
+}
+
+.high p {
   font-size: 1.2em;
-  color: white;
-  margin-top: 30px;
-
+  margin-top: 20px;
 }

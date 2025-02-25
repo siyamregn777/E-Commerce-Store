@@ -1,9 +1,9 @@
 .footer-container {
-  background-color: #333;
-  color: white;
+  /* background-color: #333; */
+  color: rgb(0, 0, 0);
   text-align: center;
   padding: 1rem;
-  margin-top: 20rem;
+  margin-top: 5rem;
 }
 
 .footer-text {

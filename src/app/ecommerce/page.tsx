@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+// import Header from '@/components/header';
+// import Footer from '@/components/footer';
 
 import '@/styles/ecommerce.css';
 
@@ -43,7 +43,7 @@ export default function Ecommerce() {
 
   return (
     <div className="ecommerce-container">
-      <Header />
+      {/* <Header /> */}
       <h1 className="page-title">E-Commerce Store</h1>
       <div className="filter-container">
         <div className="filter-item">
@@ -90,7 +90,7 @@ export default function Ecommerce() {
           </div>
         ))}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
