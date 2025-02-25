@@ -1,0 +1,160 @@
+/* Container for the contact page */
+.contact-page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: black;
+  }
+  
+  /* Header Section (Contact Me and Subtext) */
+  .contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .contact-heading {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-subtext {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Body Section for Left and Right Layout */
+  .contact-body {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Left Section (Contact Info) */
+  .left {
+    flex: 1;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .left ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .left li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .left img {
+    border-radius: 50%;
+  }
+  
+  /* Right Section (Form Container) */
+  .right {
+    flex: 2;
+    max-width: 55%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Styling */
+  .contact-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Form Group */
+  .contact-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label */
+  .contact-form-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Input Fields */
+  .contact-form-input, 
+  .contact-form-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  /* Ensure input fields in a row are the same size */
+  .contact-form-group-horizontal {
+    flex: 1;
+  }
+  
+  /* Textarea */
+  .contact-form-textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  /* Submit Button */
+  .contact-submit-button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    width: 130px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Status Message */
+  .contact-status-message {
+    margin-top: 10px;
+    font-size: 14px;
+    color: green;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-body {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .left,
+    .right {
+      max-width: 100%;
+      width: 100%;
+    }
+  
+    .contact-form-row {
+      flex-direction: column;
+    }
+  }
+  
