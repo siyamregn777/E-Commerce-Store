@@ -21,7 +21,7 @@
 .text {
   position: absolute;
   z-index: 10;
-  color: white; /* Set text color to white for visibility over the image */
+  color: rgb(255, 255, 255); /* Set text color to white for visibility over the image */
   text-align: center;
   top: 50%; /* Vertically center the text */
   left: 50%; /* Horizontally center the text */

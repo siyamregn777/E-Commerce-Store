@@ -1,0 +1,74 @@
+/* Container for the entire page */
+.add-product-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Page title */
+  .add-product-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styling */
+  .add-product-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Each form field */
+  .add-product-container form div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Labels for input fields */
+  .add-product-container form label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Input fields */
+  .add-product-container form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  /* Input fields when focused */
+  .add-product-container form input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Submit button */
+  .add-product-container form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit button on hover */
+  .add-product-container form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Submit button when clicked */
+  .add-product-container form button:active {
+    background-color: #004080;
+  }

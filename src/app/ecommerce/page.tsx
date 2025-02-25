@@ -1,10 +1,9 @@
+// src/app/page.tsx
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-// import Header from '@/components/header';
-// import Footer from '@/components/footer';
-
-import '@/styles/ecommerce.css';
+import './ecommerce.css';
+import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -43,7 +42,6 @@ export default function Ecommerce() {
 
   return (
     <div className="ecommerce-container">
-      {/* <Header /> */}
       <h1 className="page-title">E-Commerce Store</h1>
       <div className="filter-container">
         <div className="filter-item">
@@ -55,6 +53,7 @@ export default function Ecommerce() {
             value={filters.category}
             onChange={handleFilterChange}
             className="filter-input"
+            placeholder="Enter category"
           />
         </div>
         <div className="filter-item">
@@ -66,6 +65,7 @@ export default function Ecommerce() {
             value={filters.price}
             onChange={handleFilterChange}
             className="filter-input"
+            placeholder="Enter max price"
           />
         </div>
         <div className="filter-item">
@@ -77,6 +77,7 @@ export default function Ecommerce() {
             value={filters.brand}
             onChange={handleFilterChange}
             className="filter-input"
+            placeholder="Enter brand"
           />
         </div>
       </div>
@@ -90,7 +91,7 @@ export default function Ecommerce() {
           </div>
         ))}
       </div>
-      {/* <Footer /> */}
+      <Link href="/addProductPage">Add New Product</Link>
     </div>
   );
 }
