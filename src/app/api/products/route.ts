@@ -39,27 +39,58 @@ export async function GET(request: Request) {
 
   return NextResponse.json(data);
 }
+// src/app/api/products/route.ts
 
-// POST: Add a new product
 export async function POST(request: Request) {
   try {
-    const newProduct = await request.json();
-    console.log('New Product Data:', newProduct); // Log the incoming data
+    const formData = await request.formData();
 
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const price = parseFloat(formData.get('price') as string);
+    const category = formData.get('category') as string;
+    const brand = formData.get('brand') as string;
+    const image = formData.get('image') as File;
+
+    // Upload image to Supabase Storage
+    const imageName = `${Date.now()}-${image.name}`;
+    const { error: imageError } = await supabase.storage
+      .from('product-images')
+      .upload(imageName, image);
+
+    if (imageError) {
+      console.error('Image Upload Error:', imageError);
+      return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
+    }
+
+    // Get the public URL of the uploaded image
+    const { data: imageUrl } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(imageName);
+
+    // Insert product into the database
     const { data, error } = await supabase
       .from('products')
-      .insert([newProduct])
+      .insert([
+        {
+          name,
+          description,
+          price,
+          category,
+          brand,
+          image_url: imageUrl.publicUrl, // Save the image URL
+        },
+      ])
       .select();
 
     if (error) {
-      console.error('Supabase Error:', error); // Log the Supabase error
+      console.error('Supabase Error:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    console.log('Inserted Product:', data); // Log the inserted data
     return NextResponse.json(data[0], { status: 201 });
   } catch (err) {
-    console.error('Server Error:', err); // Log any unexpected errors
+    console.error('Server Error:', err);
     return NextResponse.json(
       { error: 'Internal Server Error', details: err instanceof Error ? err.message : 'Unknown error' },
       { status: 500 }
