@@ -1,0 +1,70 @@
+.helpContainer {
+    max-width: 100%;
+    margin: auto;
+    padding: 5px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+
+  }
+  .remian{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    background: aliceblue;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+    margin-top: 100px; /* Add some spacing above the help content */
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .section {
+    margin-bottom: 25px;
+  }
+  
+  .faqItem {
+    margin-bottom: 15px;
+  }
+  .faqq{
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #f1f8ff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    font-style: italic;
+  }
+  .faqItem h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .section ul li {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  .helpContainer p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
