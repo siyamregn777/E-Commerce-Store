@@ -8,9 +8,8 @@ import { useUser } from '@/context/userContext'; // Import the user context
 
 export default function Login() {
   const { setUser } = useUser(); // Get setUser from UserContext
-  const [username, setUsername] = useState(''); // Use username instead of email
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -26,7 +25,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }), // Send username instead of email
+        body: JSON.stringify({ username, password }), // Use username instead of email
       });
 
       if (!response.ok) {
@@ -35,19 +34,24 @@ export default function Login() {
       }
 
       const data = await response.json();
-      const { token, role } = data;
+      const { token, role, userId } = data;
 
       // Save the token and role in localStorage or cookies
       localStorage.setItem('token', token);
       localStorage.setItem('role', role); // Save the role to manage redirection
 
       // Update user context
-      setUser({ userId: data.userId, email, isAuthenticated: true, role });
+      setUser({
+        userId,
+        username, // Include the username
+        email: null, // Optional: Include email if available
+        isAuthenticated: true,
+        role,
+      });
 
       console.log('Login successful, redirecting...');
       setUsername('');
       setPassword('');
-      setEmail('');
 
       // Redirect based on the role (admin or user)
       if (role === 'admin') {
@@ -71,7 +75,7 @@ export default function Login() {
       <h1 className="title">Login</h1>
       <form onSubmit={handleSubmit} className="loginContainer">
         <input
-          type="text" // Use text instead of email for username
+          type="text" // Use text input type for username
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username" // Change placeholder to "Username"

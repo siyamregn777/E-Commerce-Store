@@ -1,0 +1,87 @@
+.login {
+  /* background-image: url('../../../public/uploads/jordan-1846284.jpg'); */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Center content vertically */
+}
+
+
+
+.title {
+  text-align: center;
+  color: white; /* Make the title white for better contrast */
+  font-size: 36px; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 30px; /* Space below the title */
+  margin-top: 10px; /* Space above the title */
+}
+
+.loginContainer {
+  max-width: 400px;
+  margin: 20px;
+  padding: 30px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent background */
+  margin-right: 70%;
+  margin-top: -10%;
+}
+.input {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px; /* Slightly more rounded corners */
+  box-sizing: border-box;
+  color: black;
+  outline: none; /* Remove outline on focus */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.input:focus {
+  border-color: #007BFF; /* Change border color on focus */
+}
+
+.donot {
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center; /* Center the text */
+  flex-direction: column; /* Stack elements vertically */
+  gap: 5px;
+}
+
+.signup {
+  color: rgb(43, 44, 74);
+  text-decoration: underline;
+}
+
+.createAccountLink {
+  display: inline-block;
+  margin-top: 15px; /* Increased margin for spacing */
+  padding: 12px 20px; /* Increased padding */
+  color: #fff; /* White text color */
+  background-color: #007BFF; /* Blue background */
+  font-size: 16px;
+  font-weight: bold;
+  border: none; /* No border for a cleaner button */
+  border-radius: 6px; /* More rounded corners */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+  cursor: pointer;
+}
+
+.createAccountLink:hover {
+  background-color: #adbecf; /* Dark blue background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.error {
+  color: red; /* Error message color */
+  text-align: center; /* Center error messages */
+  margin: 10px 0; /* Space around error messages */
+}
