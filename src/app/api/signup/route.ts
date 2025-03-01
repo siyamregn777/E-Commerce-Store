@@ -1,66 +1,44 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../../../lib/supabaseClient';  // Use 'supabase' instance
+// src/app/api/signup/route.ts
+import { NextResponse } from 'next/server';
+import { createUser } from '../../../models/User';
 
-interface SignupData {
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-}
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === 'POST') {
-    const { firstName, lastName, username, email, password }: SignupData = req.body;
+export async function POST(request: Request) {
+  try {
+    const { firstName, lastName, username, email, password } = await request.json();
 
     if (!firstName || !lastName || !username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required.' });
+      return NextResponse.json(
+        { message: 'All fields are required.' },
+        { status: 400 }
+      );
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+      return NextResponse.json(
+        { message: 'Password must be at least 6 characters long.' },
+        { status: 400 }
+      );
     }
 
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+    // Create the user in the 'users' table
+    const user = await createUser({
+      first_name: firstName,
+      last_name: lastName,
+      username: username,
+      email: email,
+      password: password,
+    });
 
-      if (error) {
-        return res.status(400).json({ message: error.message });
-      }
-
-      const user = data?.user;
-      if (user) {
-        const { error: insertError } = await supabase
-          .from('users')
-          .insert([
-            {
-              first_name: firstName,
-              last_name: lastName,
-              username: username,
-              email: email,
-              user_id: user.id, 
-            },
-          ]);
-
-        if (insertError) {
-          return res.status(500).json({ message: insertError.message });
-        }
-
-        return res.status(200).json({ message: 'Signup successful! Please log in.' });
-      }
-
-      return res.status(500).json({ message: 'User creation failed.' });
-    } catch (err) {
-      console.error('Server Error:', err);
-      return res.status(500).json({ message: 'Something went wrong. Please try again.' });
-    }
-  } else {
-    res.status(405).json({ message: 'Method Not Allowed' });
+    // Return the user ID along with the success message
+    return NextResponse.json(
+      { message: 'Signup successful!', userId: user[0].id }, // Return the user ID
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Signup Error:', error);
+    return NextResponse.json(
+      { message: 'Something went wrong. Please try again.' },
+      { status: 500 }
+    );
   }
 }
