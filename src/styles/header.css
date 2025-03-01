@@ -1,9 +1,10 @@
+/* header.css */
 .header-container {
   background-color: #333;
   padding: 1rem;
   display: flex;
-  align-items: center; /* Vertical centering */
-  justify-content: center; /* Horizontal centering */
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -13,15 +14,109 @@
   gap: 1rem;
   margin: 0;
   padding: 0;
-  align-items: center; /* Vertical alignment of list items */
-  justify-content: center; /* Horizontal centering of list items */
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-item a {
   color: white;
   text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .nav-item a:hover {
+  color: #f39c12;
   text-decoration: underline;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-image {
+  border-radius: 50%;
+  cursor: pointer;
+  width:  25px;
+  height: 25px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-image:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+  list-style: none;
+}
+
+.dropdown-menu .nav-item {
+  padding: 10px;
+  text-align: left;
+}
+
+.dropdown-menu .nav-item a {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-menu .nav-item:hover {
+  background: #f4f4f4;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: large;
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+}
+
+.logout-button:hover {
+  color: darkred;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    background-color: #3d4c54;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .dropdown-menu {
+    right: 50%;
+    transform: translateX(50%);
+  }
 }
