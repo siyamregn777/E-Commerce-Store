@@ -45,6 +45,18 @@ const validateProduct = (product: {
   if (product.image && !(product.image instanceof File)) throw new Error('Invalid image file.');
 };
 
+// Check if the authenticated user is an admin
+const isAdmin = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('admins')
+    .select('id')
+    .eq('id', userId)
+    .single();
+
+  if (error) throw new Error('Failed to check admin status: ' + error.message);
+  return !!data;
+};
+
 // Add a new product with image upload
 export const addProduct = async (product: {
   name: string;
@@ -55,10 +67,27 @@ export const addProduct = async (product: {
   image: File;
 }) => {
   try {
-    validateProduct(product); // Validate product data
-    const imageUrl = await uploadImage(product.image); // Upload image
+    // Get the current session
+    const { data: session, error: sessionError } = await supabase.auth.getSession();
 
-    // Insert product into the 'products' table
+    if (sessionError || !session?.session?.user?.id) {
+      throw new Error('Unauthorized: User not authenticated.');
+    }
+
+    const userId = session.session.user.id;
+
+    // Check if the user is an admin
+    if (!(await isAdmin(userId))) {
+      throw new Error('Unauthorized: Only admins can add products.');
+    }
+
+    // Validate product data
+    validateProduct(product);
+
+    // Upload the image to Supabase Storage
+    const imageUrl = await uploadImage(product.image);
+
+    // Insert the product into the 'products' table
     const { data, error } = await supabase
       .from('products')
       .insert([
