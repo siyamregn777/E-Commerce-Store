@@ -83,6 +83,30 @@ export const findUserByUsername = async (username: string) => {
   }
 };
 
+
+// ... (existing code)
+export const updatePassword = async (email: string, newPassword: string) => {
+  try {
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the password in the 'users' table
+    const { error } = await supabase
+      .from('users')
+      .update({ password: hashedPassword })
+      .eq('email', email);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { message: 'Password updated successfully' };
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Function to compare passwords
 export const comparePassword = async (plainPassword: string, hashedPassword: string) => {
   return await bcrypt.compare(plainPassword, hashedPassword);

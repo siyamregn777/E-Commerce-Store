@@ -1,32 +1,59 @@
+// src/app/api/adminRegister/route.tsx
 import { NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabaseClient';  // Use 'supabase' instance
+import { createAdmin, findAdminByEmail, findAdminByUsername } from '@/models/Admin';
 
-
-export async function GET() {
+// POST handler for creating a new admin
+export async function POST(request: Request) {
   try {
-    // Fetch images from the Supabase 'images' table
-    const { data, error } = await supabase
-      .from('images')  // Ensure this matches the name of your table in Supabase
-      .select('*');    // Select all columns from the 'images' table
+    const { firstName, lastName, username, email, password } = await request.json();
 
-    if (error) {
-      console.error('Error:', error.message);
-      return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    // Check if admin with the same email or username already exists
+    const existingAdminByEmail = await findAdminByEmail(email);
+    const existingAdminByUsername = await findAdminByUsername(username);
+
+    if (existingAdminByEmail) {
+      return NextResponse.json(
+        { message: 'Admin with this email already exists' },
+        { status: 400 }
+      );
     }
 
-    // Check if data is null or undefined
-    if (!data) {
-      return NextResponse.json({ success: false, message: 'No images found.' }, { status: 404 });
+    if (existingAdminByUsername) {
+      return NextResponse.json(
+        { message: 'Admin with this username already exists' },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({ success: true, images: data }, { status: 200 });
-    
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error('Error:', error.message);
-      return NextResponse.json({ success: false, message: error.message }, { status: 500 });
-    }
-    console.error('An unknown error occurred');
-    return NextResponse.json({ success: false, message: 'An unexpected error occurred' }, { status: 500 });
+    // Create a new admin
+    const newAdmin = {
+      first_name: firstName,
+      last_name: lastName,
+      username,
+      email,
+      password,
+    };
+
+    const createdAdmin = await createAdmin(newAdmin);
+
+    return NextResponse.json(
+      { message: 'Admin created successfully', admin: createdAdmin },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('Error creating admin:', error);
+    return NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
   }
+}
+
+// Optional: Add other HTTP methods if needed
+// Example: GET handler for fetching admins
+export async function GET() {
+  return NextResponse.json(
+    { message: 'Method not allowed' },
+    { status: 405 }
+  );
 }

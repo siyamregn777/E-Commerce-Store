@@ -18,11 +18,11 @@ const AccountSettings = () => {
     }
 
     try {
-      // Use the userId from the context
-      const userId = user.userId;
+      // Use the email from the context
+      const email = user.email;
 
-      if (!userId) {
-        throw new Error('User ID is missing. Please log in again.');
+      if (!email) {
+        throw new Error('Email is missing. Please log in again.');
       }
 
       const response = await fetch('/api/change-password', {
@@ -34,7 +34,7 @@ const AccountSettings = () => {
           currentPassword,
           newPassword,
           confirmPassword,
-          userId,
+          email,
         }),
       });
 

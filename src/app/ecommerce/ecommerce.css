@@ -129,3 +129,42 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+/* Dark mode styles */
+/* Global dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .ecommerce-container {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .navbar,
+.dark-mode .filter-container,
+.dark-mode .product-item {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.dark-mode .filter-input,
+.dark-mode .price-slider {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+.dark-mode .wishlist-btn {
+  color: #fff;
+}
+
+.dark-mode .page-title,
+.dark-mode .add-product {
+  color: #ffffff;
+}
+
+.dark-mode .error-message {
+  color: #ff6b6b;
+}

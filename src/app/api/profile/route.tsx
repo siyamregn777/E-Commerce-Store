@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { supabase } from '../../../../lib/supabaseClient';  // Use 'supabase' instance
-import User from '../../../models/User'; // Import User model
 
 
 

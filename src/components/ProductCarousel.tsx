@@ -1,20 +1,9 @@
-// src/app/ecommerce/ProductCarousel.tsx
+// src/components/ProductCarousel.tsx
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
-
-// src/app/ecommerce/ProductCarousel.tsx
-type Product = {
-    id: number;  
-    name: string;
-    description: string;
-    price: number;
-    category: string;
-    brand: string;
-    image_url: string; // Assuming price is a number, change as needed
-  };
-  
+import { Product } from '../types/Product'; // Use the imported Product type
 
 const ProductCarousel = ({ products }: { products: Product[] }) => {
   const settings = {

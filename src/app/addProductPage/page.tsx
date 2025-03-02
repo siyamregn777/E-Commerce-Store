@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { addProduct } from '../../models/Product'; // Import the updated addProduct function
 import './AddProductPage.css';
 
 export default function AddProductPage() {
@@ -11,12 +11,12 @@ export default function AddProductPage() {
     price: '',
     category: '',
     brand: '',
-    image: null as File | null, // Add image state
+    image: null as File | null,
   });
-
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
@@ -29,33 +29,29 @@ export default function AddProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('name', product.name);
-      formData.append('description', product.description);
-      formData.append('price', product.price);
-      formData.append('category', product.category);
-      formData.append('brand', product.brand);
-      if (product.image) {
-        formData.append('image', product.image); // Append the image file
-      }
+    setError(null);
 
-      await axios.post('/api/products', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Set the content type for file upload
-        },
+    try {
+      const newProduct = await addProduct({
+        ...product,
+        price: parseFloat(product.price),
+        image: product.image!,
       });
 
-      alert('Product added successfully!');
-      router.push('/'); // Redirect to the main page after adding the product
+      if (newProduct) {
+        alert('Product added successfully!');
+        router.push('/'); // Redirect to the main page
+      }
     } catch (error) {
       console.error('Error adding product:', error);
+      setError('Failed to add product. Please check your inputs and try again.');
     }
   };
 
   return (
     <div className="add-product-container">
       <h1>Add New Product</h1>
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -89,23 +85,32 @@ export default function AddProductPage() {
         </div>
         <div>
           <label>Category:</label>
-          <input
-            type="text"
+          <select
             name="category"
             value={product.category}
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="">Select Category</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home</option>
+          </select>
         </div>
         <div>
           <label>Brand:</label>
-          <input
-            type="text"
+          <select
             name="brand"
             value={product.brand}
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="">Select Brand</option>
+            <option value="coca-cola">Coca-Cola</option>
+            <option value="pepsi">Pepsi</option>
+            <option value="nike">Nike</option>
+            <option value="adidas">Adidas</option>
+          </select>
         </div>
         <div>
           <label>Image:</label>
