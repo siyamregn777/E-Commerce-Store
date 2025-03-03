@@ -1,11 +1,20 @@
-// src/app/api/adminRegister/route.tsx
 import { NextResponse } from 'next/server';
 import { createAdmin, findAdminByEmail, findAdminByUsername } from '@/models/Admin';
+import { supabase } from '../../../../lib/supabaseClient'; // Import Supabase client
 
-// POST handler for creating a new admin
 export async function POST(request: Request) {
   try {
     const { firstName, lastName, username, email, password } = await request.json();
+
+    // Check if the request is from an authenticated admin
+    const { data: session, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError || !session?.session?.user?.id) {
+      return NextResponse.json(
+        { message: 'Unauthorized: Only admins can register new admins.' },
+        { status: 401 }
+      );
+    }
 
     // Check if admin with the same email or username already exists
     const existingAdminByEmail = await findAdminByEmail(email);
@@ -47,13 +56,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
-
-// Optional: Add other HTTP methods if needed
-// Example: GET handler for fetching admins
-export async function GET() {
-  return NextResponse.json(
-    { message: 'Method not allowed' },
-    { status: 405 }
-  );
 }

@@ -1,6 +1,7 @@
-'use client'; // Mark this file as a client component
-import { useState } from 'react';
+'use client';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../../../../lib/supabaseClient'; // Import Supabase client
 import styles from './register.module.css';
 import Link from 'next/link';
 
@@ -15,10 +16,21 @@ export default function Register() {
   const [success, setSuccess] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: session, error } = await supabase.auth.getSession();
+
+      if (error || !session?.session?.user?.id) {
+        router.push('/login'); // Redirect to login if not authenticated
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setError('The passwords do not match');
       return;
@@ -28,7 +40,6 @@ export default function Register() {
     setSuccess('');
 
     try {
-      // Call the API route to register the admin
       const response = await fetch('/api/adminRegister', {
         method: 'POST',
         headers: {
@@ -40,18 +51,12 @@ export default function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Signup successful! Please log in.');
+        setSuccess('Admin registered successfully!');
         setTimeout(() => {
-          router.push('/adminDashboard'); // Redirect to the admin dashboard
+          router.push('/adminDashboard'); // Redirect to admin dashboard
         }, 2000);
-        setFirstName('');
-        setLastName('');
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
       } else {
-        setError(data.message || 'Signup failed. Please try again.');
+        setError(data.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
       console.error('Error during registration:', error);

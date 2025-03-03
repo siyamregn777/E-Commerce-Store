@@ -24,20 +24,19 @@ const Profile = () => {
       }
 
       try {
-        // Fetch user data from Supabase
-        const { data, error } = await supabase
-          .from('users')
-          .select('first_name, last_name, username, email, image')
-          .eq('email', user.email)
-          .single();
+        // Fetch user data from the API route
+        const response = await fetch(`/api/profile?email=${user.email}`);
+        const data = await response.json();
 
-        if (error) throw error;
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
 
         // Update state with fetched data
-        setName(`${data.first_name} ${data.last_name}`);
-        setUsername(data.username);
-        setEmail(data.email);
-        setImage(data.image || profilePic); // Use default image if no image is set
+        setName(`${data.user.first_name} ${data.user.last_name}`);
+        setUsername(data.user.username);
+        setEmail(data.user.email);
+        setImage(data.user.image || profilePic); // Use default image if no image is set
       } catch (err) {
         console.error('Error fetching profile data:', err);
       }
@@ -46,41 +45,51 @@ const Profile = () => {
     fetchProfileData();
   }, [user?.email]);
 
-
+  // Handle profile image change
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-  
+
       if (!user?.email || !user?.userId) {
         console.error('Email or user ID is missing. Please log in again.');
         return;
       }
-  
+
       try {
         // Upload the image to Supabase Storage
         const fileExt = file.name.split('.').pop();
         const fileName = `${user.email}-${Date.now()}.${fileExt}`;
-        const filePath = `user-profiles/${fileName}`; // Use the dedicated bucket
-  
+        const filePath = `user-profiles/${fileName}`;
+
         const { error: uploadError } = await supabase.storage
-          .from('user-profiles') // Use the dedicated bucket
+          .from('user-profiles')
           .upload(filePath, file);
-  
+
         if (uploadError) throw uploadError;
-  
+
         // Get the public URL of the uploaded image
         const { data: imageUrl } = supabase.storage
-          .from('user-profiles') // Use the dedicated bucket
+          .from('user-profiles')
           .getPublicUrl(filePath);
-  
+
         // Update the user's profile with the new image URL
-        const { error: updateError } = await supabase
-          .from('users')
-          .update({ image: imageUrl.publicUrl })
-          .eq('id', user.userId); // Use user ID instead of email
-  
-        if (updateError) throw updateError;
-  
+        const response = await fetch('/api/profile', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: user.email,
+            image: imageUrl.publicUrl,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+
         // Update the image state with the new URL
         setImage(imageUrl.publicUrl);
         alert('Profile image updated successfully!');
@@ -90,68 +99,37 @@ const Profile = () => {
     }
   };
 
-
-
-  // const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const file = event.target.files[0];
-
-  //     if (!user?.email) {
-  //       console.error('Email is missing. Please log in again.');
-  //       return;
-  //     }
-
-  //     try {
-  //       // Upload the image to Supabase Storage
-  //       const fileExt = file.name.split('.').pop();
-  //       const fileName = `${user.email}-${Date.now()}.${fileExt}`;
-  //       const filePath = `user-profiles/${fileName}`; // Use the dedicated bucket
-
-  //       const { error: uploadError } = await supabase.storage
-  //         .from('user-profiles') // Use the dedicated bucket
-  //         .upload(filePath, file);
-
-  //       if (uploadError) throw uploadError;
-
-  //       // Get the public URL of the uploaded image
-  //       const { data: imageUrl } = supabase.storage
-  //         .from('user-profiles') // Use the dedicated bucket
-  //         .getPublicUrl(filePath);
-
-  //       // Update the user's profile with the new image URL
-  //       const { error: updateError } = await supabase
-  //         .from('users')
-  //         .update({ image: imageUrl.publicUrl })
-  //         .eq('email', user.email);
-
-  //       if (updateError) throw updateError;
-
-  //       // Update the image state with the new URL
-  //       setImage(imageUrl.publicUrl);
-  //       alert('Profile image updated successfully!');
-  //     } catch (err) {
-  //       console.error('Error updating profile image:', err);
-  //     }
-  //   }
-  // };
-
+  // Handle saving profile changes
   const handleSaveChanges = async () => {
     if (!user?.email) {
       console.error('Email is missing. Please log in again.');
       return;
     }
-
+  
     try {
       const [firstName, lastName] = name.split(' ');
-
-      // Update the user's profile data in Supabase
-      const { error } = await supabase
-        .from('users')
-        .update({ first_name: firstName, last_name: lastName, username })
-        .eq('email', user.email);
-
-      if (error) throw error;
-
+  
+      // Update the user's profile data via the API route
+      const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          firstName,
+          lastName,
+          username,
+          role: user.role, // Include the user's role
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+  
       alert('Profile updated successfully!');
     } catch (err) {
       console.error('Error updating profile:', err);
@@ -159,7 +137,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="profil">
+    <div className="profile">
       <div className="profileContainer">
         <h2 className="title">Profile Information</h2>
 

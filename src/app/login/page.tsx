@@ -1,4 +1,3 @@
-// src/app/login/page.tsx
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -34,17 +33,20 @@ export default function Login() {
       }
 
       const data = await response.json();
-      const { token, role, userId } = data;
+      const { token, role, userId, email } = data;
 
-      // Save the token and role in localStorage or cookies
+      // Save the token and role in localStorage
       localStorage.setItem('token', token);
-      localStorage.setItem('role', role); // Save the role to manage redirection
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('username', username);
+      localStorage.setItem('email', email || '');
 
       // Update user context
       setUser({
         userId,
-        username, // Include the username
-        email: null, // Optional: Include email if available
+        username,
+        email,
         isAuthenticated: true,
         role,
       });

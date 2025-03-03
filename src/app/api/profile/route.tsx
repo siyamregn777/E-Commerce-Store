@@ -1,107 +1,79 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { supabase } from '../../../../lib/supabaseClient';  // Use 'supabase' instance
+// src/app/api/profile/route.ts
+import { NextResponse } from 'next/server';
+import { findUserByEmail, findAdminByEmail, updateProfile } from '../../../models/User';
 
-
-
-export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-  const email = searchParams.get('email');
-
-  if (!email) {
-    return NextResponse.json({ message: 'Email is required' }, { status: 400 });
-  }
-
+export async function GET(request: Request) {
   try {
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('firstName, lastName, username, email, image')
-      .eq('email', email)
-      .single();
+    const { searchParams } = new URL(request.url);
+    const email = searchParams.get('email');
 
-    if (error) throw error;
-
-    return NextResponse.json(user);
-  } catch (err) {
-    console.error('Error fetching profile data:', err);
-    return NextResponse.json(
-      { message: 'Failed to fetch profile data', error: err instanceof Error ? err.message : 'Unknown error' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-  const email = searchParams.get('email');
-
-  if (!email) {
-    return NextResponse.json({ message: 'Email is required' }, { status: 400 });
-  }
-
-  try {
-    const { firstName, lastName, username } = await req.json();
-    const { error } = await supabase
-      .from('users')
-      .update({ firstName, lastName, username, updatedAt: new Date() })
-      .eq('email', email);
-
-    if (error) throw error;
-
-    return NextResponse.json({ message: 'Profile updated successfully' });
-  } catch (err) {
-    console.error('Error updating profile:', err);
-    return NextResponse.json(
-      { message: 'Failed to update profile', error: err instanceof Error ? err.message : 'Unknown error' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-  const email = searchParams.get('email');
-
-  if (!email) {
-    return NextResponse.json({ message: 'Email is required' }, { status: 400 });
-  }
-
-  try {
-    const formData = await req.formData();
-    const file = formData.get('file') as File;
-
-    if (!file) {
-      return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
+    if (!email) {
+      return NextResponse.json(
+        { success: false, message: 'Email is required' },
+        { status: 400 }
+      );
     }
 
-    const cloudinaryFormData = new FormData();
-    cloudinaryFormData.append('file', file);
-    cloudinaryFormData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!);
+    // Fetch the user's profile data
+    const user = await findUserByEmail(email);
 
-    const cloudinaryResponse = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-      {
-        method: 'POST',
-        body: cloudinaryFormData,
+    if (!user) {
+      // If the user is not found, check if they are an admin
+      const admin = await findAdminByEmail(email);
+
+      if (!admin) {
+        return NextResponse.json(
+          { success: false, message: 'User not found' },
+          { status: 404 }
+        );
       }
-    );
 
-    const cloudData = await cloudinaryResponse.json();
-    if (!cloudinaryResponse.ok) throw new Error(cloudData.error.message);
+      return NextResponse.json(
+        { success: true, user: admin, role: 'admin' },
+        { status: 200 }
+      );
+    }
 
-    const imageUrl = cloudData.secure_url;
-
-    const { error } = await supabase
-      .from('users')
-      .update({ image: imageUrl, updatedAt: new Date() })
-      .eq('email', email);
-
-    if (error) throw error;
-
-    return NextResponse.json({ imageUrl });
-  } catch (err) {
-    console.error('Error uploading image:', err);
     return NextResponse.json(
-      { message: 'Failed to upload profile image', error: err instanceof Error ? err.message : 'Unknown error' },
+      { success: true, user, role: 'user' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const { email, firstName, lastName, username, image, role } = await request.json();
+
+    if (!email) {
+      return NextResponse.json(
+        { success: false, message: 'Email is required' },
+        { status: 400 }
+      );
+    }
+
+    // Update the user's profile data
+    const updatedUser = await updateProfile(email, {
+      first_name: firstName,
+      last_name: lastName,
+      username,
+      image,
+    }, role); // Pass the role to the updateProfile function
+
+    return NextResponse.json(
+      { success: true, message: 'Profile updated successfully', user: updatedUser },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
       { status: 500 }
     );
   }

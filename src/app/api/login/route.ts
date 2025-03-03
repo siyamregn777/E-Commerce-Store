@@ -1,7 +1,7 @@
-// src/app/api/login/route.ts
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { findUserByUsername, comparePassword } from '../../../models/User';
+import { findAdminByUsername, compareAdminPassword } from '../../../models/Admin';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -16,18 +16,32 @@ export async function POST(request: Request) {
       );
     }
 
-    // Find the user by username
+    // Check both User and Admin tables for the username
     const user = await findUserByUsername(username);
+    const admin = await findAdminByUsername(username);
 
-    if (!user) {
+    if (!user && !admin) {
       return NextResponse.json(
         { success: false, message: 'User not found' },
         { status: 404 }
       );
     }
 
-    // Compare the provided password with the stored hashed password
-    const isPasswordValid = await comparePassword(password, user.password);
+    let isPasswordValid = false;
+    let role = '';
+    let userId = '';
+
+    if (user) {
+      // Compare password for regular user
+      isPasswordValid = await comparePassword(password, user.password);
+      role = 'user';
+      userId = user.id;
+    } else if (admin) {
+      // Compare password for admin
+      isPasswordValid = await compareAdminPassword(password, admin.password);
+      role = 'admin';
+      userId = admin.id;
+    }
 
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -38,13 +52,13 @@ export async function POST(request: Request) {
 
     // Generate a JWT token
     const token = jwt.sign(
-      { userId: user.id, username: user.username, role: 'user' }, // Include role if needed
+      { userId, username, role }, // Include role in the token payload
       SECRET_KEY,
       { expiresIn: '1h' }
     );
 
     return NextResponse.json(
-      { success: true, message: 'Login successful', token, role: 'user' },
+      { success: true, message: 'Login successful', token, role },
       { status: 200 }
     );
   } catch (error) {
