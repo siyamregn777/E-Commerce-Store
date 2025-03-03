@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ const Profile = () => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [image, setImage] = useState<string | StaticImageData>(profilePic);
+  const [image, setImage] = useState<string | StaticImageData>(profilePic); // Use the imported image as the default
 
   // Fetch the user's profile data on component mount
   useEffect(() => {
@@ -25,18 +25,27 @@ const Profile = () => {
 
       try {
         // Fetch user data from the API route
-        const response = await fetch(`/api/profile?email=${user.email}`);
-        const data = await response.json();
-
+        const response = await fetch(`/api/profile?email=${encodeURIComponent(user.email)}`);
         if (!response.ok) {
-          throw new Error(data.message);
+          throw new Error('Failed to fetch profile data');
         }
+
+        const data = await response.json();
 
         // Update state with fetched data
         setName(`${data.user.first_name} ${data.user.last_name}`);
         setUsername(data.user.username);
         setEmail(data.user.email);
-        setImage(data.user.image || profilePic); // Use default image if no image is set
+
+        // Ensure the image URL starts with a leading slash or is an absolute URL
+        if (data.user.image) {
+          const imageUrl = data.user.image.startsWith('/') || data.user.image.startsWith('http')
+            ? data.user.image
+            : `/${data.user.image}`; // Add a leading slash if missing
+          setImage(imageUrl);
+        } else {
+          setImage(profilePic); // Use the default image if no image is set
+        }
       } catch (err) {
         console.error('Error fetching profile data:', err);
       }
@@ -72,6 +81,11 @@ const Profile = () => {
           .from('user-profiles')
           .getPublicUrl(filePath);
 
+        // Ensure the image URL starts with a leading slash or is an absolute URL
+        const publicUrl = imageUrl.publicUrl.startsWith('/') || imageUrl.publicUrl.startsWith('http')
+          ? imageUrl.publicUrl
+          : `/${imageUrl.publicUrl}`;
+
         // Update the user's profile with the new image URL
         const response = await fetch('/api/profile', {
           method: 'PUT',
@@ -80,7 +94,7 @@ const Profile = () => {
           },
           body: JSON.stringify({
             email: user.email,
-            image: imageUrl.publicUrl,
+            image: publicUrl,
           }),
         });
 
@@ -91,7 +105,7 @@ const Profile = () => {
         }
 
         // Update the image state with the new URL
-        setImage(imageUrl.publicUrl);
+        setImage(publicUrl);
         alert('Profile image updated successfully!');
       } catch (err) {
         console.error('Error updating profile image:', err);
@@ -105,10 +119,10 @@ const Profile = () => {
       console.error('Email is missing. Please log in again.');
       return;
     }
-  
+
     try {
       const [firstName, lastName] = name.split(' ');
-  
+
       // Update the user's profile data via the API route
       const response = await fetch('/api/profile', {
         method: 'PUT',
@@ -123,13 +137,13 @@ const Profile = () => {
           role: user.role, // Include the user's role
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.message);
       }
-  
+
       alert('Profile updated successfully!');
     } catch (err) {
       console.error('Error updating profile:', err);
@@ -143,21 +157,42 @@ const Profile = () => {
 
         {/* Profile Image Upload */}
         <div className="imageContainer">
-          <Image src={image} alt="Profile" width={120} height={120} className="profileImage" />
-          <input type="file" id="fileInput" className="fileInput" onChange={handleImageChange} />
-          <label htmlFor="fileInput" className="uploadButton">Change Photo</label>
+          <Image
+            src={image}
+            alt="Profile"
+            width={120}
+            height={120}
+            className="profileImage"
+          />
+          <input
+            type="file"
+            id="fileInput"
+            className="fileInput"
+            onChange={handleImageChange}
+          />
+          <label htmlFor="fileInput" className="uploadButton">
+            Change Photo
+          </label>
         </div>
 
         {/* Profile Details */}
         <div className="infoContainer">
           <div className="infoItem">
             <label>Name:</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
 
           <div className="infoItem">
             <label>Username:</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
 
           <div className="infoItem">
@@ -165,7 +200,9 @@ const Profile = () => {
             <input type="email" value={email} disabled />
           </div>
 
-          <button className="saveButton" onClick={handleSaveChanges}>Save Changes</button>
+          <button className="saveButton" onClick={handleSaveChanges}>
+            Save Changes
+          </button>
         </div>
       </div>
     </div>
