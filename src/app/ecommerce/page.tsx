@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import './ecommerce.css';
-import Link from 'next/link';
 import Image from 'next/image';
 import { FaHeart } from 'react-icons/fa';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -67,9 +66,7 @@ export default function Ecommerce() {
         </button>
       </header>
       <h5 className="page-title">Advertise and Promote Your Products Online Here</h5>
-      <Link href="/addProductPage" className="add-product">
-        Add Your New Product
-      </Link>
+      
 
       <ProductCarousel products={products} />
 
