@@ -1,28 +1,24 @@
-'use client';
+"use client"; // Mark this as a Client Component
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient'; // Import Supabase client
+import { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '../../lib/supabaseClient';
 
-// Define the structure of the user state
 interface User {
-  userId: string | null; // Supabase user ID
-  username: string | null; // Username (if available)
+  userId: string | null;
+  username: string | null;
   email: string | null;
   isAuthenticated: boolean;
-  role: string | null; // Role (if available)
+  role: string | null;
 }
 
-// Define the context properties
 interface UserContextProps {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
-  logout: () => void; // Logout function
+  logout: () => void;
 }
 
-// Create the UserContext
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-// UserProvider component to wrap your application
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User>({
     userId: null,
@@ -32,30 +28,34 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     role: null,
   });
 
-  // Effect to check for a session on initial load
   useEffect(() => {
-    const fetchSession = async () => {
-      const { data: session, error } = await supabase.auth.getSession();
+    // Check if token and other user data are in localStorage
+    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
+    const email = localStorage.getItem('email');
+    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
 
-      if (error || !session?.session?.user?.id) {
-        // No session found, clear user state
-        setUser({ userId: null, username: null, email: null, isAuthenticated: false, role: null });
-        return;
-      }
-
-      // Restore user state from session
+    if (token && userId && username && email && role) {
+      // If token and user data exist in localStorage, restore the session
       setUser({
-        userId: session.session.user.id,
-        username: session.session.user.email || null,
-        email: session.session.user.email || null,
+        userId,
+        username,
+        email,
         isAuthenticated: true,
-        role: 'admin', // Assuming the user is an admin
+        role,
       });
-    };
+    } else {
+      setUser({
+        userId: null,
+        username: null,
+        email: null,
+        isAuthenticated: false,
+        role: null,
+      });
+    }
 
-    fetchSession();
-
-    // Listen for authentication state changes
+    // Listen for auth state changes (e.g., sign-in, sign-out)
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session?.user?.id) {
         setUser({
@@ -63,10 +63,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           username: session.user.email || null,
           email: session.user.email || null,
           isAuthenticated: true,
-          role: 'admin', // Assuming the user is an admin
+          role: 'admin',
         });
       } else if (event === 'SIGNED_OUT') {
         setUser({ userId: null, username: null, email: null, isAuthenticated: false, role: null });
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
       }
     });
 
@@ -75,14 +80,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  // Logout function to clear user state and session
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('Error logging out:', error);
     } else {
-      // Reset user state
       setUser({ userId: null, username: null, email: null, isAuthenticated: false, role: null });
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
     }
   };
 
@@ -93,7 +101,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Custom hook to use the UserContext
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {

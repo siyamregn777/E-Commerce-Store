@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { addProduct } from '../../../models/Product';
 import './AddProductPage.css';
-import { useUser } from '@/context/userContext'; // Import the user context
+import { useUser } from '@/context/userContext';
 
 export default function AddProductPage() {
   const [product, setProduct] = useState({
@@ -16,7 +16,7 @@ export default function AddProductPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { user } = useUser(); // Get the user from the context
+  const { user } = useUser();
 
   useEffect(() => {
     if (!user.isAuthenticated || user.role !== 'admin') {

@@ -16,7 +16,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check both User and Admin tables for the username
     const user = await findUserByUsername(username);
     const admin = await findAdminByUsername(username);
 
@@ -30,17 +29,18 @@ export async function POST(request: Request) {
     let isPasswordValid = false;
     let role = '';
     let userId = '';
+    let email = '';
 
     if (user) {
-      // Compare password for regular user
       isPasswordValid = await comparePassword(password, user.password);
       role = 'user';
       userId = user.id;
+      email = user.email;
     } else if (admin) {
-      // Compare password for admin
       isPasswordValid = await compareAdminPassword(password, admin.password);
       role = 'admin';
       userId = admin.id;
+      email = admin.email;
     }
 
     if (!isPasswordValid) {
@@ -50,15 +50,14 @@ export async function POST(request: Request) {
       );
     }
 
-    // Generate a JWT token
     const token = jwt.sign(
-      { userId, username, role }, // Include role in the token payload
+      { userId, username, role, email },
       SECRET_KEY,
       { expiresIn: '1h' }
     );
 
     return NextResponse.json(
-      { success: true, message: 'Login successful', token, role },
+      { success: true, message: 'Login successful', token, role, email },
       { status: 200 }
     );
   } catch (error) {

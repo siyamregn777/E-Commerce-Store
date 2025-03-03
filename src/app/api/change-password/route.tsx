@@ -1,4 +1,3 @@
-// app/api/change-password/route.ts
 import { NextResponse } from 'next/server';
 import { updatePassword, findUserByEmail, comparePassword } from '../../../models/User';
 
@@ -6,7 +5,6 @@ export async function POST(req: Request) {
   try {
     const { currentPassword, newPassword, confirmPassword, email } = await req.json();
 
-    // Validate input
     if (!currentPassword || !newPassword || !confirmPassword || !email) {
       return NextResponse.json(
         { success: false, message: 'All fields are required.' },
@@ -21,7 +19,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Fetch the user from the database
     const user = await findUserByEmail(email);
 
     if (!user) {
@@ -31,7 +28,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify the current password
     const isPasswordValid = await comparePassword(currentPassword, user.password);
 
     if (!isPasswordValid) {
@@ -41,7 +37,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Update the user's password
     await updatePassword(email, newPassword);
 
     return NextResponse.json({

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './login.css';
-import { useUser } from '@/context/userContext'; // Import the user context
+import { useUser } from '@/context/userContext';
+import './login.css'
 
 export default function Login() {
-  const { setUser } = useUser(); // Get setUser from UserContext
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { setUser } = useUser();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }), // Use username instead of email
+        body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
@@ -57,9 +57,9 @@ export default function Login() {
 
       // Redirect based on the role (admin or user)
       if (role === 'admin') {
-        router.push('/adminDashboard'); // Redirect admin to the dashboard
+        router.push('/adminDashboard');
       } else {
-        router.push('/'); // Redirect regular user to home page
+        router.push('/');
       }
     } catch (err) {
       if (err instanceof Error) {

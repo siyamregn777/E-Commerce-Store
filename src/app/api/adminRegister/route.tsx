@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createAdmin, findAdminByEmail, findAdminByUsername } from '@/models/Admin';
-import { supabase } from '../../../../lib/supabaseClient'; // Import Supabase client
+import { supabase } from '../../../../lib/supabaseClient';
 
 export async function POST(request: Request) {
   try {
     const { firstName, lastName, username, email, password } = await request.json();
 
-    // Check if the request is from an authenticated admin
     const { data: session, error: sessionError } = await supabase.auth.getSession();
 
     if (sessionError || !session?.session?.user?.id) {
@@ -16,7 +15,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if admin with the same email or username already exists
     const existingAdminByEmail = await findAdminByEmail(email);
     const existingAdminByUsername = await findAdminByUsername(username);
 
@@ -34,7 +32,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create a new admin
     const newAdmin = {
       first_name: firstName,
       last_name: lastName,
