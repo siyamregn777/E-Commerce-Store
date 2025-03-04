@@ -1,0 +1,191 @@
+/* General Styles */
+.payment-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Product Details */
+.product-details {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.product-details h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.product-details p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Payment Options */
+.payment-options {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.option {
+  flex: 1;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option.selected {
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.option h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.option p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* PayPal Buttons */
+.paypal-buttons {
+  margin-top: 1rem;
+}
+
+/* Bank Details */
+.bank-details {
+  margin-top: 1rem;
+}
+
+.bank-details h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.bank-details p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Bank Transfer Form */
+.bank-transfer-form {
+  margin-top: 1rem;
+}
+
+.bank-transfer-form label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.bank-transfer-form input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bank-transfer-form input:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.bank-transfer-form button {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.bank-transfer-form button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.bank-transfer-form button:active {
+  transform: translateY(0);
+}
+
+/* Loading Spinner and Error Message */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: #ff4d4f;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-container {
+    padding: 1rem;
+  }
+
+  .payment-container h1 {
+    font-size: 2rem;
+  }
+
+  .product-details h2 {
+    font-size: 1.5rem;
+  }
+
+  .product-details p {
+    font-size: 1rem;
+  }
+
+  .payment-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .option h2 {
+    font-size: 1.2rem;
+  }
+
+  .option p {
+    font-size: 0.9rem;
+  }
+
+  .bank-transfer-form button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

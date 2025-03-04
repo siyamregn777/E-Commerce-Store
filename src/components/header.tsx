@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useUser } from '@/context/userContext';
 import Image from 'next/image';
 import '../styles/header.css';
+import image1 from '../../public/images (2).png'
 
 const Header = ({ isVisible }: { isVisible: boolean }) => {
   const { user, setUser } = useUser();
@@ -68,7 +69,7 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
             {/* Profile Dropdown */}
             <li className="dropdown" ref={dropdownRef}>
               <Image
-                src='/home.webp'
+                src={image1}
                 alt="Profile"
                 height={50}
                 width={50}

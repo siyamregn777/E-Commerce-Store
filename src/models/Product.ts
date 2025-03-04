@@ -197,3 +197,17 @@ export const deleteProduct = async (id: string) => {
     throw error;
   }
 };
+
+export const fetchProductById = async (id: string): Promise<Product> => {
+  // Use the full URL for the API request
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const response = await fetch(`${baseUrl}/api/product/${id}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch product');
+  }
+
+  const data = await response.json();
+  console.log('Fetched Product Data:', data); // Debugging
+  return data;
+};
