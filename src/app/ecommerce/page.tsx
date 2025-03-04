@@ -7,6 +7,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ProductCarousel from '../../components/ProductCarousel';
 import { fetchProducts } from '../../models/Product';
 import { Product } from '../../types/Product';
+import Link from 'next/link';
 
 export default function Ecommerce() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -140,44 +141,47 @@ export default function Ecommerce() {
         </div>
       </div>
 
-      <div className="product-list">
-        {loading ? (
-          <LoadingSpinner />
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : (
-          products.map((product) => (
-            <div key={product.id} className="product-item">
-              <div className="product-image-container">
-                <Image
-                  src={product.image_url}
-                  alt={product.name}
-                  width={200}
-                  height={200}
-                  className="product-image"
-                  onError={(e) => {
-                    // Fallback image if the image fails to load
-                    (e.target as HTMLImageElement).src = '/images/placeholder.jpg';
-                  }}
-                />
-              </div>
-              <h2 className="product-name">{product.name}</h2>
-              <p className="product-description">{product.description}</p>
-              <p className="product-price">
-                Price: ${product.price}{' '}
-                {product.discount && <span className="discount">-{product.discount}%</span>}
-              </p>
-              <p className="product-brand">Brand: {product.brand}</p>
-              <button
-                className="wishlist-btn"
-                onClick={() => toggleWishlist(product.id)}
-              >
-                <FaHeart color={wishlist.includes(product.id) ? 'red' : 'gray'} />
-              </button>
-            </div>
-          ))
-        )}
-      </div>
+
+<div className="product-list">
+  {loading ? (
+    <LoadingSpinner />
+  ) : error ? (
+    <p className="error-message">{error}</p>
+  ) : (
+    products.map((product) => (
+      <Link key={product.id} href={`/product/${product.id}`}>
+        <div className="product-item">
+          <div className="product-image-container">
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              width={200}
+              height={200}
+              className="product-image"
+              onError={(e) => {
+                // Fallback image if the image fails to load
+                (e.target as HTMLImageElement).src = '/images/placeholder.jpg';
+              }}
+            />
+          </div>
+          <h2 className="product-name">{product.name}</h2>
+          <p className="product-description">{product.description}</p>
+          <p className="product-price">
+            Price: ${product.price}{' '}
+            {product.discount && <span className="discount">-{product.discount}%</span>}
+          </p>
+          <p className="product-brand">Brand: {product.brand}</p>
+          <button
+            className="wishlist-btn"
+            onClick={() => toggleWishlist(product.id)}
+          >
+            <FaHeart color={wishlist.includes(product.id) ? 'red' : 'gray'} />
+          </button>
+        </div>
+      </Link>
+    ))
+  )}
+</div>
 
       <div className="pagination">
         {/* Pagination logic here */}
