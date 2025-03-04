@@ -1,9 +1,11 @@
-'use client';
+"use client";
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../../../../lib/supabaseClient'; // Import Supabase client
+// import { supabase } from '../../../../lib/supabaseClient';
 import styles from './register.module.css';
 import Link from 'next/link';
+import { useUser } from '@/context/userContext';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -15,45 +17,44 @@ export default function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
+  const { user } = useUser();
 
   useEffect(() => {
-    const checkSession = async () => {
-      const { data: session, error } = await supabase.auth.getSession();
-
-      if (error || !session?.session?.user?.id) {
-        router.push('/login'); // Redirect to login if not authenticated
-      }
-    };
-
-    checkSession();
-  }, [router]);
+    if (!user.isAuthenticated || user.role !== 'admin') {
+      router.push('/login');
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (password !== confirmPassword) {
       setError('The passwords do not match');
       return;
     }
-
+  
     setError('');
     setSuccess('');
-
+  
     try {
+      // Get the session token from localStorage
+      const token = localStorage.getItem('token');
+  
       const response = await fetch('/api/adminRegister', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Include the session token
         },
         body: JSON.stringify({ firstName, lastName, username, email, password }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setSuccess('Admin registered successfully!');
         setTimeout(() => {
-          router.push('/adminDashboard'); // Redirect to admin dashboard
+          router.push('/adminDashboard');
         }, 2000);
       } else {
         setError(data.message || 'Registration failed. Please try again.');
@@ -63,7 +64,6 @@ export default function Register() {
       setError('An unexpected error occurred. Please try again.');
     }
   };
-
   return (
     <div className={styles.sign}>
       <Link href="/adminDashboard" className={styles.dash}>

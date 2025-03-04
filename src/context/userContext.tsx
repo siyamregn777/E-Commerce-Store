@@ -29,7 +29,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
-    // Fetch the session from Supabase and restore user state
+    // Fetch the session on initial load
     const fetchSession = async () => {
       const { data: session, error } = await supabase.auth.getSession();
 
