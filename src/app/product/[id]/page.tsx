@@ -1,7 +1,7 @@
 import { use } from 'react';
 import { fetchProductById } from '../../../models/Product';
 import BuyNowButton from './BuyNowButton';
-import './Product.css'
+import './product.css'
 import ProductImage from './ProductImage'; // Import the new Client Component
 
 interface ProductPageProps {
