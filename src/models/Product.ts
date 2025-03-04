@@ -45,18 +45,6 @@ const validateProduct = (product: {
   if (product.image && !(product.image instanceof File)) throw new Error('Invalid image file.');
 };
 
-// Check if the authenticated user is an admin
-const isAdmin = async (userId: string) => {
-  const { data, error } = await supabase
-    .from('admins')
-    .select('id')
-    .eq('id', userId)
-    .single();
-
-  if (error) throw new Error('Failed to check admin status: ' + error.message);
-  return !!data;
-};
-
 // Add a new product with image upload
 export const addProduct = async (product: {
   name: string;
@@ -66,48 +54,24 @@ export const addProduct = async (product: {
   brand: string;
   image: File;
 }) => {
-  try {
-    // Get the current session
-    const { data: session, error: sessionError } = await supabase.auth.getSession();
+  const formData = new FormData();
+  formData.append('name', product.name);
+  formData.append('description', product.description);
+  formData.append('price', product.price.toString());
+  formData.append('category', product.category);
+  formData.append('brand', product.brand);
+  formData.append('image', product.image);
 
-    if (sessionError || !session?.session?.user?.id) {
-      throw new Error('Unauthorized: User not authenticated.');
-    }
+  const response = await fetch('/api/products', {
+    method: 'POST',
+    body: formData,
+  });
 
-    const userId = session.session.user.id;
-
-    // Check if the user is an admin
-    if (!(await isAdmin(userId))) {
-      throw new Error('Unauthorized: Only admins can add products.');
-    }
-
-    // Validate product data
-    validateProduct(product);
-
-    // Upload the image to Supabase Storage
-    const imageUrl = await uploadImage(product.image);
-
-    // Insert the product into the 'products' table
-    const { data, error } = await supabase
-      .from('products')
-      .insert([
-        {
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          category: product.category,
-          brand: product.brand,
-          image_url: imageUrl,
-        },
-      ])
-      .select();
-
-    if (error) throw new Error(error.message);
-    return data ? data[0] : null;
-  } catch (error) {
-    console.error('Error adding product:', error);
-    throw error;
+  if (!response.ok) {
+    throw new Error('Failed to add product');
   }
+
+  return response.json();
 };
 
 // Fetch all products with optional filters and pagination

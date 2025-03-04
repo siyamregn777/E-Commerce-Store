@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { addProduct } from '../../../models/Product';
 import './AddProductPage.css';
-import { useUser } from '@/context/userContext';
 
 export default function AddProductPage() {
   const [product, setProduct] = useState({
@@ -17,13 +16,6 @@ export default function AddProductPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { user } = useUser();
-
-  useEffect(() => {
-    if (!user.isAuthenticated || user.role !== 'admin') {
-      router.push('/login');
-    }
-  }, [user, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -41,10 +33,6 @@ export default function AddProductPage() {
     setError(null);
 
     try {
-      if (!user.isAuthenticated || user.role !== 'admin') {
-        throw new Error('Unauthorized: Please log in to add a product.');
-      }
-
       const newProduct = await addProduct({
         ...product,
         price: parseFloat(product.price),

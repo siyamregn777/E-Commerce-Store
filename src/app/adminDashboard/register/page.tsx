@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { supabase } from '../../../../lib/supabaseClient';
 import './register.css';
 import Link from 'next/link';
-import { useUser } from '@/context/userContext';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -17,39 +15,29 @@ export default function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
-  const { user } = useUser();
-
-  useEffect(() => {
-    if (!user.isAuthenticated || user.role !== 'admin') {
-      router.push('/login');
-    }
-  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     if (password !== confirmPassword) {
       setError('The passwords do not match');
       return;
     }
-  
+
     setError('');
     setSuccess('');
-  
+
     try {
-      const token = localStorage.getItem('token');
-  
       const response = await fetch('/api/adminRegister', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ firstName, lastName, username, email, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         setSuccess('Admin registered successfully!');
         setTimeout(() => {
@@ -63,7 +51,7 @@ export default function Register() {
       setError('An unexpected error occurred. Please try again.');
     }
   };
-  
+
   return (
     <div className="sign">
       <Link href="/adminDashboard" className="dash">

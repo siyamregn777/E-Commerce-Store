@@ -1,17 +1,6 @@
-// src/app/api/product/route.ts
 import { NextResponse } from 'next/server';
 import { supabase } from '../../../../lib/supabaseClient';
 
-// interface Product {
-//   id?: number;
-//   name: string;
-//   description: string;
-//   price: number;
-//   category: string;
-//   brand: string;
-// }
-
-// GET: Fetch all products (with optional filters)
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const category = searchParams.get('category');
@@ -40,7 +29,6 @@ export async function GET(request: Request) {
 
   return NextResponse.json(data);
 }
-// src/app/api/products/route.ts
 
 export async function POST(request: Request) {
   try {
