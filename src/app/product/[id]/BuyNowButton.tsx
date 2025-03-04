@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Product } from '../../../types/Product';
-import './Product.css';
+import './product.css';
 import { useUser } from '@/context/userContext'; // Import the useUser hook
 
 interface BuyNowButtonProps {

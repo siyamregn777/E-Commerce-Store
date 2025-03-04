@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { fetchProductById } from '../../models/Product';
 import { Product } from '../../types/Product';
@@ -8,7 +8,17 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import './payment.css';
 
+// Wrap the main component in Suspense
 export default function PaymentPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <PaymentPageContent />
+    </Suspense>
+  );
+}
+
+// Move the main logic to a separate component
+function PaymentPageContent() {
   const searchParams = useSearchParams();
   const productId = searchParams.get('productId');
   const quantity = searchParams.get('quantity');
@@ -126,9 +136,7 @@ export default function PaymentPage() {
           {selectedOption === 'bank' && (
             <div className="bank-details">
               <h3>Bank Details</h3>
-              {/* <p>Bank Name: Example Bank</p> */}
               <p>Account Number: 123456789</p>
-              {/* <p>Routing Number: 987654321</p> */}
               <p>Please include your order ID as the reference.</p>
 
               <form className="bank-transfer-form" onSubmit={handleBankPaymentSubmit}>

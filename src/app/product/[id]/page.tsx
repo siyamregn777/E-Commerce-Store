@@ -3,10 +3,9 @@ import { fetchProductById } from '../../../models/Product';
 import BuyNowButton from './BuyNowButton';
 import './Product.css'
 import ProductImage from './ProductImage'; // Import the new Client Component
+
 interface ProductPageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
