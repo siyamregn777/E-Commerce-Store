@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 // import { supabase } from '../../../../lib/supabaseClient';
-import styles from './register.module.css';
+import './register.css';
 import Link from 'next/link';
 import { useUser } from '@/context/userContext';
 
@@ -37,14 +37,13 @@ export default function Register() {
     setSuccess('');
   
     try {
-      // Get the session token from localStorage
       const token = localStorage.getItem('token');
   
       const response = await fetch('/api/adminRegister', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Include the session token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ firstName, lastName, username, email, password }),
       });
@@ -64,19 +63,20 @@ export default function Register() {
       setError('An unexpected error occurred. Please try again.');
     }
   };
+  
   return (
-    <div className={styles.sign}>
-      <Link href="/adminDashboard" className={styles.dash}>
+    <div className="sign">
+      <Link href="/adminDashboard" className="dash">
         Dashboard
       </Link>
-      <div className={styles.signupContainer}>
-        <h1 className={styles.signupTitle}>Register Admin</h1>
-        <form onSubmit={handleSubmit} className={styles.signupForm}>
-          {error && <p className={styles.error}>{error}</p>}
-          {success && <p className={styles.success}>{success}</p>}
+      <div className="signupContainer">
+        <h1 className="signupTitle">Register Admin</h1>
+        <form onSubmit={handleSubmit} className="signupForm">
+          {error && <p className="error">{error}</p>}
+          {success && <p className="success">{success}</p>}
 
-          <div className={styles.formGroup}>
-            <label htmlFor="firstName" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="firstName" className="label">
               First Name
             </label>
             <input
@@ -86,12 +86,12 @@ export default function Register() {
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="Enter your first name"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="lastName" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="lastName" className="label">
               Last Name
             </label>
             <input
@@ -101,12 +101,12 @@ export default function Register() {
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Enter your last name"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="username" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="username" className="label">
               Username
             </label>
             <input
@@ -116,12 +116,12 @@ export default function Register() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="email" className="label">
               Email
             </label>
             <input
@@ -131,12 +131,12 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="password" className="label">
               Password
             </label>
             <input
@@ -146,12 +146,12 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword" className={styles.label}>
+          <div className="formGroup">
+            <label htmlFor="confirmPassword" className="label">
               Confirm Password
             </label>
             <input
@@ -161,11 +161,11 @@ export default function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
               required
-              className={styles.input}
+              className="input"
             />
           </div>
 
-          <button type="submit" className={styles.button}>
+          <button type="submit" className="button">
             Sign Up
           </button>
         </form>
