@@ -11,7 +11,7 @@
 
 .title {
   text-align: center;
-  color: white; /* Make the title white for better contrast */
+  color: rgb(0, 0, 0); /* Make the title white for better contrast */
   font-size: 36px; /* Larger font size */
   font-weight: bold; /* Bold text */
   margin-bottom: 30px; /* Space below the title */
@@ -71,7 +71,7 @@
   text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
   cursor: pointer;
-  width: 100%; /* Full width for smaller screens */
+  width: 50%; /* Full width for smaller screens */
 }
 
 .createAccountLink:hover {
