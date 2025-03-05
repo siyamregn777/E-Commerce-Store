@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { addProduct } from '../../../models/Product';
 import './AddProductPage.css';
 
@@ -15,7 +15,7 @@ export default function AddProductPage() {
     image: null as File | null,
   });
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -41,7 +41,14 @@ export default function AddProductPage() {
 
       if (newProduct) {
         alert('Product added successfully!');
-        router.push('/');
+        setProduct({
+          name: '',
+          description: '',
+          price: '',
+          category: '',
+          brand: '',
+          image: null,
+        });
       }
     } catch (error) {
       console.error('Error adding product:', error);
@@ -94,8 +101,15 @@ export default function AddProductPage() {
           >
             <option value="">Select Category</option>
             <option value="electronics">Electronics</option>
-            <option value="fashion">Fashion</option>
-            <option value="home">Home</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Outerwear">Outerwear</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Computers">Computers</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Eyewear">Eyewear</option>
+          
+
           </select>
         </div>
         <div>
@@ -111,6 +125,34 @@ export default function AddProductPage() {
             <option value="pepsi">Pepsi</option>
             <option value="nike">Nike</option>
             <option value="adidas">Adidas</option>
+            <option value="puma">Puma</option>
+            <option value="TrendyWear">TrendyWear</option>
+            <option value="Gucci">Gucci</option>
+            <option value="PowerTech">PowerTech</option>
+            <option value="HP">HP</option>
+            <option value="Apple">Apple</option>
+            <option value="Dell">Dell</option>
+            <option value="Nike">Nike</option>
+            <option value="SpeedStride">SpeedStride</option>
+            <option value="Sony">Sony</option>
+            <option value="Xiaomi">Xiaomi</option>
+            <option value="Acer">Acer</option>
+            <option value="Lenovo">Lenovo</option>
+            <option value="Asus">Asus</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Levi’s">Levi`s</option>
+            <option value="Columbia">Columbia</option>
+            <option value="Ray-Ban">Ray-Ban</option>
+            <option value="Oakley">Oakley</option>
+            <option value="Gucci">Gucci</option>
+            <option value="Prada">Prada</option>
+            <option value="Persol">Persol</option>
+            <option value="Tom Ford">Tom Ford</option>
+            <option value="Versace">Versace</option>
+            <option value="Maui Jim">Maui Jim</option>
+            <option value="Burberry">Burberry</option>
+            <option value="Dolce & Gabbana">Dolce & Gabbana</option>
+            <option value="Hugo Boss">Hugo Boss</option>
           </select>
         </div>
         <div>

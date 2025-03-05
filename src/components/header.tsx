@@ -53,19 +53,11 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
         {user.isAuthenticated ? (
           <>
             
-            <li className="nav-item">
-              <Link href="/booking">Booking</Link>
-            </li>
-            
             {user.role === 'admin' && (
               <li className="nav-item">
                 <Link href="/adminDashboard">Admin Dashboard</Link>
               </li>
             )}
-            <li className="nav-item">
-              <Link href="/payments">Payment</Link>
-            </li>
-
             {/* Profile Dropdown */}
             <li className="dropdown" ref={dropdownRef}>
               <Image
