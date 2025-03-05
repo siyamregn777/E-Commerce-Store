@@ -1,5 +1,5 @@
+// import { NextResponse } from 'next/server';
 import { supabase } from '../../lib/supabaseClient';
-
 export interface Product {
   id: string; // UUID
   name: string;
@@ -75,47 +75,50 @@ export const addProduct = async (product: {
 };
 
 // Fetch all products with optional filters and pagination
-export const fetchProducts = async (
-  filters: {
-    category?: string;
-    price?: string;
-    brand?: string;
-    sort?: string;
-  },
-  page: number = 1,
-  limit: number = 10
-) => {
-  try {
-    let query = supabase.from('products').select('*');
+// models/Product.ts
 
-    // Apply filters
-    if (filters.category) query = query.eq('category', filters.category);
-    if (filters.brand) query = query.eq('brand', filters.brand);
-    if (filters.price) query = query.lte('price', filters.price);
 
-    // Apply sorting
-    if (filters.sort === 'price_low') {
-      query = query.order('price', { ascending: true });
-    } else if (filters.sort === 'price_high') {
-      query = query.order('price', { ascending: false });
-    } else if (filters.sort === 'newest') {
-      query = query.order('created_at', { ascending: false });
-    }
+export async function fetchProducts(filters: {
+  category?: string;
+  price?: string;
+  brand?: string;
+  sort?: string;
+  search?: string;
+}) {
+  let query = supabase.from('products').select('*');
 
-    // Apply pagination
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
-    query = query.range(from, to);
-
-    const { data, error } = await query;
-
-    if (error) throw new Error(error.message);
-    return data as Product[];
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    throw error;
+  if (filters.category) {
+    query = query.ilike('category', `%${filters.category}%`);
   }
-};
+
+  if (filters.price) {
+    query = query.lte('price', Number(filters.price));
+  }
+
+  if (filters.brand) {
+    query = query.ilike('brand', `%${filters.brand}%`);
+  }
+
+  if (filters.search) {
+    query = query.ilike('name', `%${filters.search}%`);
+  }
+
+  if (filters.sort === 'price_low') {
+    query = query.order('price', { ascending: true });
+  } else if (filters.sort === 'price_high') {
+    query = query.order('price', { ascending: false });
+  } else if (filters.sort === 'newest') {
+    query = query.order('created_at', { ascending: false });
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
 
 // Update a product (including image if provided)
 export const updateProduct = async (

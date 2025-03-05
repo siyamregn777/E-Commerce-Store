@@ -30,6 +30,7 @@ export async function GET(request: Request) {
   return NextResponse.json(data);
 }
 
+// POST API route
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
@@ -41,8 +42,15 @@ export async function POST(request: Request) {
     const brand = formData.get('brand') as string;
     const image = formData.get('image') as File;
 
+    // Ensure the image file name is valid
+    if (!image || !image.name) {
+      return NextResponse.json({ error: 'Invalid image file' }, { status: 400 });
+    }
+
+    // Generate a unique file name
+    const imageName = `${Date.now()}-${image.name.replace(/\s+/g, '-')}`;
+
     // Upload image to Supabase Storage
-    const imageName = `${Date.now()}-${image.name}`;
     const { error: imageError } = await supabase.storage
       .from('product-images')
       .upload(imageName, image);
@@ -67,7 +75,7 @@ export async function POST(request: Request) {
           price,
           category,
           brand,
-          image_url: imageUrl.publicUrl, // Save the image URL
+          image_url: imageUrl.publicUrl,
         },
       ])
       .select();
