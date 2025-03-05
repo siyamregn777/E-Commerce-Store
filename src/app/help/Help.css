@@ -1,70 +1,139 @@
 .helpContainer {
-    max-width: 100%;
-    margin: auto;
-    padding: 5px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: black;
-    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+  max-width: 100%;
+  margin: auto;
+  padding: 20px; /* Increased padding for better spacing */
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: black;
+  min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+}
 
+.remian {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px; /* Increased padding for better spacing */
+  background: aliceblue;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: black;
+  min-height: auto; /* Remove fixed height for better responsiveness */
+  margin-top: 20px; /* Reduced margin for smaller screens */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  gap: 20px; /* Add gap between sections */
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.faqItem {
+  margin-bottom: 15px;
+}
+
+.faqq {
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #f1f8ff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  font-style: italic;
+  width: 100%; /* Full width for smaller screens */
+  text-align: center; /* Center text */
+}
+
+.faqItem h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section ul li {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.helpContainer p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .helpContainer {
+    padding: 15px; /* Reduce padding for smaller screens */
   }
-  .remian{
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 10px;
-    background: aliceblue;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: black;
-    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
-    margin-top: 100px; /* Add some spacing above the help content */
-    display: flex;
-    justify-content: space-between;
+
+  .remian {
+    padding: 15px; /* Reduce padding for smaller screens */
+    margin-top: 10px; /* Reduce margin for smaller screens */
   }
-  
+
   .title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 20px; /* Reduce font size for smaller screens */
   }
-  
-  .section {
-    margin-bottom: 25px;
-  }
-  
-  .faqItem {
-    margin-bottom: 15px;
-  }
-  .faqq{
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: #f1f8ff;
-    border-radius: 5px;
-    padding: 10px 20px;
-    border: none;
-    font-style: italic;
-  }
+
   .faqItem h4 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 16px; /* Reduce font size for smaller screens */
   }
-  
-  .section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
+
   .section ul li {
-    margin-bottom: 5px;
-    font-size: 16px;
+    font-size: 14px; /* Reduce font size for smaller screens */
   }
-  
+
   .helpContainer p {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 14px; /* Reduce font size for smaller screens */
   }
-  
+
+  .faqq {
+    padding: 8px 16px; /* Reduce padding for smaller screens */
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .helpContainer {
+    padding: 10px; /* Further reduce padding for very small screens */
+  }
+
+  .remian {
+    padding: 10px; /* Further reduce padding */
+    margin-top: 5px; /* Further reduce margin */
+  }
+
+  .title {
+    font-size: 18px; /* Further reduce font size */
+  }
+
+  .faqItem h4 {
+    font-size: 14px; /* Further reduce font size */
+  }
+
+  .section ul li {
+    font-size: 12px; /* Further reduce font size */
+  }
+
+  .helpContainer p {
+    font-size: 12px; /* Further reduce font size */
+  }
+
+  .faqq {
+    padding: 6px 12px; /* Further reduce padding */
+    font-size: 12px; /* Further reduce font size */
+  }
+}

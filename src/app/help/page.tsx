@@ -1,7 +1,6 @@
 'use client';
 
 import './Help.css';
-import Link from 'next/link';
 
 const Help = () => {
   return (
@@ -23,11 +22,7 @@ const Help = () => {
             <h4>How can I update my profile?</h4>
             <p>You can update your profile details from the &quot;Account Settings&quot; page under your profile menu.</p>
           </div>
-          <button className="faqq">
-            <Link href="/Middle3">
-              <span>View All FAQs</span>  {/* Link to FAQ page */}
-            </Link>
-          </button>
+          
         </div>
 
         <div className="section">

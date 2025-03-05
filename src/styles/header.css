@@ -4,18 +4,20 @@
   padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* Align items to the sides */
   width: 100%;
+  position: relative; /* Ensure positioning context for dropdowns */
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   gap: 1rem;
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
   align-items: center;
-  justify-content: center;
+  margin-left: 350px;
+
 }
 
 .nav-item a {
@@ -40,7 +42,7 @@
 .profile-image {
   border-radius: 50%;
   cursor: pointer;
-  width:  25px;
+  width: 25px;
   height: 25px;
   transition: transform 0.3s ease-in-out;
 }
@@ -93,30 +95,66 @@
   color: darkred;
 }
 
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none; /* Hidden by default on desktop */
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger-icon {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 3px 0;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    align-items: center;
-    background-color: #3d4c54;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+  .hamburger-menu {
+    display: flex; /* Show hamburger menu on mobile */
   }
 
   .nav-list {
+    display: none; /* Hide nav list by default on mobile */
     flex-direction: column;
-    align-items: center;
+    position: absolute;
+    top: 60px; /* Adjust based on header height */
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+  z-index: 1000;
+  }
+
+  .nav-list.open {
+    display: flex; /* Show nav list when menu is open */
   }
 
   .nav-item {
     margin: 10px 0;
+    text-align: center;
   }
 
   .dropdown-menu {
-    right: 50%;
-    transform: translateX(50%);
+    position: static;
+    background-color: #555;
+    border-radius: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .dropdown-menu .nav-item {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .dropdown-menu .nav-item a {
+    color: white;
+  }
+
+  .dropdown-menu .nav-item:hover {
+    background: #666;
   }
 }

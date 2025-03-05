@@ -6,13 +6,15 @@ import { useState, useEffect, useRef } from 'react';
 import { useUser } from '@/context/userContext';
 import Image from 'next/image';
 import '../styles/header.css';
-import image1 from '../../public/images (2).png'
+import image1 from '../../public/images (2).png';
 
 const Header = ({ isVisible }: { isVisible: boolean }) => {
   const { user, setUser } = useUser();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
   const dropdownRef = useRef<HTMLLIElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -20,11 +22,14 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
     router.push('/login');
   };
 
-  // Close dropdown when clicking outside
+  // Close dropdown and menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
+      }
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
       }
     };
 
@@ -36,7 +41,15 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
 
   return (
     <div className={`header-container ${isVisible ? 'visible' : ''}`}>
-      <ul className="nav-list">
+      {/* Hamburger Menu Icon */}
+      <div className="hamburger-menu" onClick={() => setMenuOpen(!menuOpen)} ref={menuRef}>
+        <div className="hamburger-icon"></div>
+        <div className="hamburger-icon"></div>
+        <div className="hamburger-icon"></div>
+      </div>
+
+      {/* Navigation Menu */}
+      <ul className={`nav-list ${menuOpen ? 'open' : ''}`}>
         <li className="nav-item">
           <Link href="/">Home</Link>
         </li>
@@ -52,7 +65,6 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
 
         {user.isAuthenticated ? (
           <>
-            
             {user.role === 'admin' && (
               <li className="nav-item">
                 <Link href="/adminDashboard">Admin Dashboard</Link>

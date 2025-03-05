@@ -1,0 +1,86 @@
+/* Admin Dashboard Styles */
+.add {
+    color: black;
+    text-align: center;
+    background-color: white;
+    font-weight: bolder;
+    font-size: large;
+    padding: 20px;
+  }
+  
+  .mainn {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 50vh; /* Full height of the viewport */
+    background-color: #f4f4f4; /* Light background color */
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Font style */
+    flex-wrap: wrap; /* Allow the items to wrap on small screens */
+    gap: 40px;
+  }
+  
+  .mainn a {
+    text-decoration: none; /* Remove underline from links */
+    color: #fff; /* Link color */
+    background-color: #0070f3; /* Link background color */
+    padding: 10px 20px; /* Padding around the links */
+    margin: 10px; /* Margin between links */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+    width: 200px; /* Fixed width for links */
+    text-align: center; /* Center text */
+    box-sizing: border-box; /* Include padding and margin in the width calculation */
+  }
+  
+  .mainn a:hover {
+    background-color: #083561; /* Darker shade on hover */
+  }
+  
+  /* Media Queries for Responsiveness */
+  
+  /* For small screens (mobile) */
+  @media (max-width: 600px) {
+    .add {
+      font-size: medium; /* Adjust font size for mobile */
+      padding: 10px; /* Adjust padding for mobile */
+    }
+  
+    .mainn {
+      flex-direction: column; /* Stack items vertically */
+      height: auto; /* Adjust height for better fitting */
+      padding: 10px;
+    }
+  
+    .mainn a {
+      width: 100%; /* Make links fill the container on small screens */
+      margin: 10px 0; /* Margin between links on mobile */
+    }
+  }
+  
+  /* For medium screens (tablets) */
+  @media (max-width: 768px) {
+    .mainn {
+      flex-direction: row; /* Keep horizontal layout on medium screens */
+      justify-content: space-around; /* Distribute links evenly */
+    }
+  
+    .mainn a {
+      width: 150px; /* Reduce the width of the links on tablets */
+      margin: 10px; /* Add margin between links */
+    }
+  }
+  
+  /* For larger screens (desktop) */
+  @media (min-width: 1024px) {
+    .mainn {
+      flex-direction: row; /* Horizontal layout for desktop */
+      justify-content: center; /* Center items on desktop */
+    }
+  
+    .mainn a {
+      width: 200px; /* Fixed width for links */
+    }
+  }
+  

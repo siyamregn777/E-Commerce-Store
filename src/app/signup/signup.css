@@ -1,48 +1,54 @@
-.sign{
+.sign {
     background-color: white;
-}
-.signupContainer {
-    max-width: 400px;
-    margin: 0 auto;
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add padding for better spacing on small screens */
+  }
+  
+  .signupContainer {
+    width: 100%; /* Use full width for smaller screens */
+    max-width: 400px; /* Limit maximum width for larger screens */
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.signupTitle {
+  }
+  
+  .signupTitle {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-}
-
-.signupForm {
+  }
+  
+  .signupForm {
     display: flex;
     flex-direction: column;
-}
-
-.formGroup {
+  }
+  
+  .formGroup {
     margin-bottom: 16px;
     color: black;
-}
-
-.label {
+  }
+  
+  .label {
     font-size: 14px;
     margin-bottom: 4px;
     color: #000000;
-}
-
-.input {
+  }
+  
+  .input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     color: black;
-}
-
-.button {
+  }
+  
+  .button {
     padding: 10px 20px;
     background-color: #007BFF;
     color: white;
@@ -50,22 +56,72 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-}
-
-.button:hover {
+    width: 100%; /* Full width for smaller screens */
+  }
+  
+  .button:hover {
     background-color: #0056b3;
-}
-
-.error {
+  }
+  
+  .error {
     color: red;
     font-size: 14px;
     margin-bottom: 10px;
     text-align: center;
-}
-
-.success {
+  }
+  
+  .success {
     color: green;
     font-size: 14px;
     margin-bottom: 10px;
     text-align: center;
-}
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .sign {
+      padding: 15px; /* Reduce padding for smaller screens */
+    }
+  
+    .signupContainer {
+      padding: 15px; /* Reduce padding for smaller screens */
+    }
+  
+    .signupTitle {
+      font-size: 22px; /* Reduce font size for smaller screens */
+    }
+  
+    .input {
+      padding: 8px; /* Reduce padding for smaller screens */
+      font-size: 12px; /* Reduce font size for smaller screens */
+    }
+  
+    .button {
+      padding: 8px; /* Reduce padding for smaller screens */
+      font-size: 14px; /* Reduce font size for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .sign {
+      padding: 10px; /* Further reduce padding for very small screens */
+    }
+  
+    .signupContainer {
+      padding: 10px; /* Further reduce padding */
+    }
+  
+    .signupTitle {
+      font-size: 20px; /* Further reduce font size */
+    }
+  
+    .input {
+      padding: 6px; /* Further reduce padding */
+      font-size: 12px; /* Further reduce font size */
+    }
+  
+    .button {
+      padding: 6px; /* Further reduce padding */
+      font-size: 12px; /* Further reduce font size */
+    }
+  }

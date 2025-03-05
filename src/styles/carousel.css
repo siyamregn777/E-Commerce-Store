@@ -1,0 +1,27 @@
+/* Arrow Styling */
+.slick-prev, .slick-next {
+    font-size: 30px;
+    color: #000; /* Adjust the arrow color */
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .slick-prev {
+    left: 10px; /* Position the left arrow */
+  }
+  
+  .slick-next {
+    right: 10px; /* Position the right arrow */
+  }
+  
+  .slick-prev:hover, .slick-next:hover {
+    color: #f39c12; /* Arrow color on hover */
+  }
+  
+  .slick-arrow {
+    font-size: 30px; /* Adjust the size of the arrows */
+  }
+  

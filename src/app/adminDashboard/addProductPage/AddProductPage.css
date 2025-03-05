@@ -93,3 +93,57 @@
   color: black; /* Set error message text to black */
   font-weight: bold;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .add-product-container {
+    width: 90%; /* Make the container more flexible */
+    padding: 15px;
+  }
+
+  .add-product-container form {
+    gap: 10px; /* Reduce gap between form elements */
+  }
+
+  .add-product-container form button {
+    margin-left: 10%;
+    margin-right: 10%; /* Make button more centered */
+  }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 480px) {
+  .add-product-container {
+    width: 95%; /* Allow more space on small screens */
+    padding: 10px;
+  }
+
+  .add-product-container h1 {
+    font-size: 20px; /* Reduce title size */
+    margin-bottom: 10px;
+  }
+
+  .add-product-container form {
+    gap: 8px;
+  }
+
+  .add-product-container form button {
+    padding: 12px 15px;
+    font-size: 14px; /* Make button smaller for small screens */
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+/* Small screens, but larger than mobile */
+@media (max-width: 600px) {
+  .add-product-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .add-product-container form button {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}

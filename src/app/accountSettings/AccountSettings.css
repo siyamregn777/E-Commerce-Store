@@ -1,102 +1,123 @@
-.doma{
+.doma {
   background-color: #eff6fa;
-  padding: 0%;
-  height: 100vh;
+  padding: 20px; /* Add padding for better spacing on small screens */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
+
 .settingsContainer {
-    max-width: 450px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: black;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 3%;
+  width: 90%; /* Use percentage width for better responsiveness */
+  max-width: 450px; /* Limit maximum width for larger screens */
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: black;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.section {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.section input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.saveButton {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #27ae60;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #219150;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .doma {
+    padding: 15px; /* Reduce padding for smaller screens */
   }
-  
+
+  .settingsContainer {
+    width: 95%; /* Increase width for smaller screens */
+    padding: 15px;
+  }
+
   .title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
+    font-size: 20px; /* Slightly reduce font size */
   }
-  
-  .section {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
+
   .section h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 16px; /* Reduce font size for smaller screens */
   }
-  
+
   .section input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 8px; /* Reduce padding for smaller screens */
+    font-size: 14px; /* Reduce font size for smaller screens */
   }
-  
+
   .saveButton {
-    width: 100%;
+    padding: 10px; /* Reduce padding for smaller screens */
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .doma {
+    padding: 10px; /* Further reduce padding for very small screens */
+  }
+
+  .settingsContainer {
+    width: 100%; /* Use full width for very small screens */
     padding: 10px;
-    background-color: #27ae60;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
   }
-  
-  .saveButton:hover {
-    background-color: #219150;
+
+  .title {
+    font-size: 18px; /* Further reduce font size */
   }
-  
-  .toggleButton {
-    padding: 10px;
-    background-color: #f39c12;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
+
+  .section h3 {
+    font-size: 14px; /* Further reduce font size */
   }
-  
-  .toggleButton:hover {
-    background-color: #d68910;
+
+  .section input {
+    padding: 6px; /* Further reduce padding */
+    font-size: 12px; /* Further reduce font size */
   }
-  
-  .linkButton {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+
+  .saveButton {
+    padding: 8px; /* Further reduce padding */
+    font-size: 12px; /* Further reduce font size */
   }
-  
-  .linkButton.linked {
-    background-color: #e74c3c;
-  }
-  
-  .linkButton:hover {
-    background-color: #2980b9;
-  }
-  
-  .linkButton.linked:hover {
-    background-color: #c0392b;
-  }
-  
+}

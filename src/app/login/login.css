@@ -1,15 +1,13 @@
 .login {
-  /* background-image: url('../../../public/uploads/jordan-1846284.jpg'); */
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  min-height: 100vh; /* Use min-height instead of height */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Center content vertically */
+  padding: 20px; /* Add padding for better spacing on small screens */
 }
-
-
 
 .title {
   text-align: center;
@@ -22,15 +20,15 @@
 
 .loginContainer {
   max-width: 400px;
-  margin: 20px;
+  width: 100%; /* Use full width for smaller screens */
   padding: 30px;
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent background */
-  margin-right: 70%;
-  margin-top: -10%;
+  margin: 20px; /* Add margin for better spacing */
 }
+
 .input {
   width: 100%;
   padding: 12px; /* Increased padding */
@@ -73,10 +71,11 @@
   text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
   cursor: pointer;
+  width: 100%; /* Full width for smaller screens */
 }
 
 .createAccountLink:hover {
-  background-color: #adbecf; /* Dark blue background on hover */
+  background-color: #0056b3; /* Dark blue background on hover */
   transform: translateY(-2px); /* Slight lift effect */
 }
 
@@ -84,4 +83,53 @@
   color: red; /* Error message color */
   text-align: center; /* Center error messages */
   margin: 10px 0; /* Space around error messages */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .login {
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
+
+  .title {
+    font-size: 28px; /* Reduce font size for smaller screens */
+  }
+
+  .loginContainer {
+    padding: 20px; /* Reduce padding for smaller screens */
+  }
+
+  .input {
+    padding: 10px; /* Reduce padding for smaller screens */
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+
+  .createAccountLink {
+    padding: 10px; /* Reduce padding for smaller screens */
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    padding: 10px; /* Further reduce padding for very small screens */
+  }
+
+  .title {
+    font-size: 24px; /* Further reduce font size */
+  }
+
+  .loginContainer {
+    padding: 15px; /* Further reduce padding */
+  }
+
+  .input {
+    padding: 8px; /* Further reduce padding */
+    font-size: 12px; /* Further reduce font size */
+  }
+
+  .createAccountLink {
+    padding: 8px; /* Further reduce padding */
+    font-size: 12px; /* Further reduce font size */
+  }
 }

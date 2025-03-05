@@ -1,54 +1,94 @@
+/* Centered heading at the top */
+.aboutHeader {
+  text-align: center;
+  font-size: 32px;
+  margin: 20px 0;
+  color: black;
+}
+
 /* Main container for the About page */
 .aboutMain {
-    display: flex; /* Enables flexbox for layout */
-    gap: 20px; /* Adds space between image and text */
-    padding: 20px; /* Adds padding around the container */
-    flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Container for the image */
+.imageContainer {
+  width: 90%;
+  max-width: 600px;
+}
+
+/* Styles for the image */
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Description section */
+.description {
+  width: 90%;
+  max-width: 800px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* Styles for the list */
+.description ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Styles for each list item */
+.description li {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+/* Styles for bold text inside list items */
+.description li strong {
+  color: #333;
+  font-size: 18px;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .aboutMain {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    text-align: left;
   }
-  
-  /* Styling for the About Us heading */
-  .aboutMain h1 {
-    width: 100%; /* Makes the heading span the full width */
-    text-align: center; /* Centers the heading */
-    font-size: 28px; /* Adjusts the font size */
-    margin-bottom: 20px; /* Adds space below the heading */
-    color: black;
+
+  .imageContainer {
+    flex: 1;
+    max-width: 50%;
   }
-  
-  /* Styles for the image */
-  .image {
-    width: 500px; /* Sets the image width */
-    height: auto; /* Maintains aspect ratio */
-    border-radius: 10px; /* Adds rounded corners */
-    /* box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); Adds a subtle shadow */
-  }
-  
-  /* Container for the text */
+
   .description {
-    flex: 1; /* Allows text container to take remaining space */
-    max-width: 600px; /* Sets a max width for readability */
-    line-height: 1.6; /* Improves text readability */
-    font-size: 16px; /* Sets the font size */
+    flex: 1;
+    max-width: 50%;
   }
-  
-  /* Styles for the list */
-  .description ul {
-    list-style-type: none; /* Removes default list bullets */
-    padding: 0; /* Removes default padding */
+}
+
+@media (max-width: 480px) {
+  .aboutHeader {
+    font-size: 28px;
   }
-  
-  /* Styles for each list item */
-  .description li {
-    margin-bottom: 15px; /* Adds spacing between list items */
-    padding: 10px; /* Adds padding inside each item */
-    background-color: #f9f9f9; /* Sets a light background color */
-    border-radius: 5px; /* Adds rounded corners */
-    color: black;
+
+  .description {
+    font-size: 14px;
   }
-  
-  /* Styles for bold text inside list items */
-  .description li strong {
-    color: #333; /* Sets a dark color for emphasis */
-    font-size: 18px; /* Increases the font size */
-  }
-  
+}

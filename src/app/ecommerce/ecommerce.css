@@ -1,140 +1,139 @@
+/* General styles */
 .ecommerce-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    color: black;
-  }
-  
-  .page-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-  }
-  
-  .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 40px;
-    margin-top: 25px;
-  }
-  
-  .filter-item {
-    flex: 1 1 300px;
-  }
-  
-  .filter-input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    
-  }
-  
-  .product-item {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border: 1px solid #e1e1e1;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Ensure all cards have the same height */
-  }
-  
-  
-  .product-item:hover {
-    transform: translateY(-10px);
-  }
-  
-  .product-name {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    flex-grow: 1; /* Ensure text takes up remaining space */
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: black;
+}
 
-  }
-  
-  .product-description {
-    font-size: 1rem;
-    color: #555;
-    flex-grow: 1; /* Ensure text takes up remaining space */
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
 
-  }
-  
-  .product-image-container {
-    width: 100%;
-    height: 150px; /* Fixed height for the image container */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Ensure images don't overflow */
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  .product-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure images maintain aspect ratio */
-  }  
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+  margin-top: 25px;
+}
 
-  .product-price {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-top: 2px;
-  }
-  
-  .product-brand {
-    font-size: 1rem;
-    color: #777;
-    margin-top: 2px;
+.filter-item {
+  flex: 1 1 300px;
+}
 
-  }
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
 
-  .wishlist-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    margin-top: 2px;
-    align-self: flex-end; /* Align button to the bottom right */
-  }
-  /* src/app/ecommerce.css */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-item:hover {
+  transform: translateY(-10px);
+}
+
+.product-name {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.product-description {
+  font-size: 1rem;
+  color: #555;
+  flex-grow: 1;
+}
+
+.product-image-container {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.product-brand {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 2px;
+}
+
+.wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 2px;
+  align-self: flex-end;
+}
+
 .product-image {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
 }
-.add-product{
+
+.add-product {
   margin-left: 80%;
   color: green;
 }
 
-.add-product::after{
-  content: "+"; 
+.add-product::after {
+  content: "+";
   font-size: 20px;
 }
-.add-product:hover{
+
+.add-product:hover {
   font-size: large;
   cursor: pointer;
   color: blue;
   transition: color 0.3s ease;
 }
-/* src/app/ecommerce.css */
+
 .price-slider {
   width: 100%;
   margin-top: 10px;
-  -webkit-appearance: none; /* Remove default styling */
+  -webkit-appearance: none;
   appearance: none;
   height: 8px;
   background: #897676;
@@ -164,10 +163,8 @@
   background: #0070f3;
   border-radius: 50%;
   cursor: pointer;
-}
 
 /* Dark mode styles */
-/* Global dark mode styles */
 body.dark-mode {
   background-color: #121212;
   color: #ffffff;
@@ -203,4 +200,116 @@ body.dark-mode {
 
 .dark-mode .error-message {
   color: #ff6b6b;
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 768px) {
+  .ecommerce-container {
+    padding: 10px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filter-item {
+    flex: 1 1 100%;
+  }
+
+  .product-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .product-item {
+    padding: 15px;
+  }
+
+  .product-name {
+    font-size: 1.25rem;
+  }
+
+  .product-description {
+    font-size: 0.9rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .product-brand {
+    font-size: 0.9rem;
+  }
+
+  .wishlist-btn {
+    font-size: 1rem;
+  }
+
+  .price-slider {
+    width: 100%;
+  }
+
+  .add-product {
+    margin-left: 70%;
+  }
+}
+
+/* Responsive styles for very small screens (mobile phones) */
+@media (max-width: 480px) {
+  .ecommerce-container {
+    padding: 5px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .filter-container {
+    flex-direction: column;
+  }
+
+  .filter-item {
+    flex: 1 1 100%;
+  }
+
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item {
+    padding: 10px;
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-description {
+    font-size: 0.8rem;
+  }
+
+  .product-price {
+    font-size: 0.9rem;
+  }
+
+  .product-brand {
+    font-size: 0.8rem;
+  }
+
+  .wishlist-btn {
+    font-size: 1rem;
+  }
+
+  .price-slider {
+    width: 100%;
+  }
+
+  .add-product {
+    margin-left: 60%;
+  }
+}
 }

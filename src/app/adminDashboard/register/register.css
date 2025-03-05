@@ -1,6 +1,9 @@
-.sign{
+/* General Styles */
+.sign {
     background-color: white;
+    padding: 20px;
 }
+
 .signupContainer {
     max-width: 400px;
     margin: 0 auto;
@@ -69,8 +72,83 @@
     margin-bottom: 10px;
     text-align: center;
 }
-.dash{
+
+.dash {
     color: black;
     font-size: large;
     font-weight: bolder;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Mobile devices */
+@media (max-width: 600px) {
+    .signupContainer {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .signupTitle {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .input {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .error, .success {
+        font-size: 12px;
+    }
+}
+
+/* Tablets and smaller laptops (max-width: 768px) */
+@media (max-width: 768px) {
+    .signupContainer {
+        max-width: 80%;
+    }
+
+    .signupTitle {
+        font-size: 22px;
+    }
+
+    .input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .button {
+        font-size: 15px;
+        padding: 9px 18px;
+    }
+}
+
+/* Desktops and larger screens */
+@media (min-width: 1024px) {
+    .signupContainer {
+        max-width: 500px; /* Larger width on desktop */
+    }
+
+    .signupTitle {
+        font-size: 24px;
+    }
+
+    .input {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
 }
