@@ -1,3 +1,5 @@
+
+// models/Product.ts
 // import { NextResponse } from 'next/server';
 import { supabase } from '../../lib/supabaseClient';
 export interface Product {
@@ -43,6 +45,7 @@ const validateProduct = (product: {
   if (!product.category) throw new Error('Category is required.');
   if (!product.brand) throw new Error('Brand is required.');
   if (product.image && !(product.image instanceof File)) throw new Error('Invalid image file.');
+  
 };
 
 // Add a new product with image upload
@@ -84,6 +87,7 @@ export async function fetchProducts(filters: {
   brand?: string;
   sort?: string;
   search?: string;
+  limit?: number; // Add this line
 }) {
   let query = supabase.from('products').select('*');
 
@@ -109,6 +113,11 @@ export async function fetchProducts(filters: {
     query = query.order('price', { ascending: false });
   } else if (filters.sort === 'newest') {
     query = query.order('created_at', { ascending: false });
+  }
+
+  // Add limit if provided
+  if (filters.limit) {
+    query = query.limit(filters.limit);
   }
 
   const { data, error } = await query;
