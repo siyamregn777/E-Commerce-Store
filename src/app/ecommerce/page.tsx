@@ -10,7 +10,6 @@ import { fetchProducts } from '../../models/Product';
 import { Product } from '../../types/Product';
 import Link from 'next/link';
 
-// Define options for category and brand
 const categoryOptions = [
   { value: '', label: 'All' },
   { value: 'electronics', label: 'Electronics' },
