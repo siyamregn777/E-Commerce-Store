@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';  // Import Image from Next.js
 import Link from 'next/link'
-// Define the type for an image
 type ImageType = {
   _id: string;
   imageUrl: string;
