@@ -48,15 +48,12 @@ function PaymentPageContent() {
     fetchProduct();
   }, [productId]);
 
-  // Handle bank payment submission
   const handleBankPaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!transactionId) {
       alert('Please enter a valid transaction ID.');
       return;
     }
-
-    // Submit the transaction ID (you can send it to your backend)
     alert(`Transaction ID submitted: ${transactionId}`);
     console.log('Transaction ID:', transactionId);
   };
@@ -75,7 +72,6 @@ function PaymentPageContent() {
       </div>
 
       <div className="payment-options">
-        {/* PayPal Option */}
         <div
           className={`option ${selectedOption === 'paypal' ? 'selected' : ''}`}
           onClick={() => setSelectedOption('paypal')}
@@ -85,7 +81,7 @@ function PaymentPageContent() {
           {selectedOption === 'paypal' && (
             <PayPalScriptProvider
               options={{
-                clientId: 'AY3cVdkPkRGUIXNJTrN4Sb0wegu8acxT6nVsU5K52Q5pOuJwf1JCyJ7j4Y0bRD87-X5ZpWINJVD-fY04', // Replace with your PayPal client ID
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '', // Use environment variable
                 currency: 'USD',
               }}
             >
@@ -97,7 +93,7 @@ function PaymentPageContent() {
                     purchase_units: [
                       {
                         amount: {
-                          value: totalPrice || '0.00', // Use the total price from the query params
+                          value: totalPrice || '0.00',
                           currency_code: 'USD',
                         },
                         description: `Payment for ${product.name}`,
@@ -106,12 +102,9 @@ function PaymentPageContent() {
                   });
                 }}
                 onApprove={(data, actions) => {
-                  // Ensure actions.order is defined
                   if (!actions.order) {
                     return Promise.reject('Order not found');
                   }
-
-                  // Handle successful payment
                   return actions.order.capture().then((details) => {
                     alert(`Payment completed by ${details.payer?.name?.given_name || 'a user'}`);
                     console.log('Payment details:', details);
@@ -126,7 +119,6 @@ function PaymentPageContent() {
           )}
         </div>
 
-        {/* Bank Transfer Option */}
         <div
           className={`option ${selectedOption === 'bank' ? 'selected' : ''}`}
           onClick={() => setSelectedOption('bank')}
