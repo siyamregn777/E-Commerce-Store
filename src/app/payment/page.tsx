@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { fetchProductById } from '../../models/Product';
 import { Product } from '../../types/Product';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import './payment.css';
 
 // Wrap the main component in Suspense
@@ -81,40 +81,11 @@ function PaymentPageContent() {
           {selectedOption === 'paypal' && (
             <PayPalScriptProvider
               options={{
-                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '', // Use environment variable
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '',
                 currency: 'USD',
               }}
             >
-              <PayPalButtons
-                style={{ layout: 'vertical' }}
-                createOrder={(data, actions) => {
-                  return actions.order.create({
-                    intent: 'CAPTURE',
-                    purchase_units: [
-                      {
-                        amount: {
-                          value: totalPrice || '0.00',
-                          currency_code: 'USD',
-                        },
-                        description: `Payment for ${product.name}`,
-                      },
-                    ],
-                  });
-                }}
-                onApprove={(data, actions) => {
-                  if (!actions.order) {
-                    return Promise.reject('Order not found');
-                  }
-                  return actions.order.capture().then((details) => {
-                    alert(`Payment completed by ${details.payer?.name?.given_name || 'a user'}`);
-                    console.log('Payment details:', details);
-                  });
-                }}
-                onError={(error) => {
-                  console.error('PayPal error:', error);
-                  alert('An error occurred during payment. Please try again.');
-                }}
-              />
+              <PayPalButtonsWrapper totalPrice={totalPrice} product={product} />
             </PayPalScriptProvider>
           )}
         </div>
@@ -149,5 +120,47 @@ function PaymentPageContent() {
         </div>
       </div>
     </div>
+  );
+}
+
+// PayPalButtonsWrapper component to handle loading state
+function PayPalButtonsWrapper({ totalPrice, product }: { totalPrice: string | null; product: Product }) {
+  const [{ isPending }] = usePayPalScriptReducer();
+
+  if (isPending) {
+    return <LoadingSpinner />; // Show a spinner while the SDK is loading
+  }
+
+  return (
+    <PayPalButtons
+      style={{ layout: 'vertical' }}
+      createOrder={(data, actions) => {
+        return actions.order.create({
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                value: totalPrice || '0.00',
+                currency_code: 'USD',
+              },
+              description: `Payment for ${product.name}`,
+            },
+          ],
+        });
+      }}
+      onApprove={(data, actions) => {
+        if (!actions.order) {
+          return Promise.reject('Order not found');
+        }
+        return actions.order.capture().then((details) => {
+          alert(`Payment completed by ${details.payer?.name?.given_name || 'a user'}`);
+          console.log('Payment details:', details);
+        });
+      }}
+      onError={(error) => {
+        console.error('PayPal error:', error);
+        alert('An error occurred during payment. Please try again.');
+      }}
+    />
   );
 }

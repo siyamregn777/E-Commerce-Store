@@ -1,6 +1,6 @@
 /* header.css */
 .header-container {
-  background-color: #333;
+  background-color: #1d1c1c;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -12,11 +12,11 @@
 .nav-list {
   list-style: none;
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
   /* margin: 0; */
   padding: 0;
   align-items: center;
-  margin-left: 350px;
+  margin-left: 430px;
 
 }
 
