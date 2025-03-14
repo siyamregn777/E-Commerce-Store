@@ -69,7 +69,7 @@ export default function Ecommerce() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Toggle dark mode
+  
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
