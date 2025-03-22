@@ -5,8 +5,30 @@ import Image from 'next/image';
 import { Product } from '../types/Product';
 import '../styles/carousel.css';
 
+// Define the type for the arrow props
+interface ArrowProps {
+  onClick?: () => void;
+}
+
 const ProductCarousel = ({ products }: { products: Product[] }) => {
   const slidesToShow = Math.min(3, products.length); // Show up to 3 slides
+
+  // Custom Arrow Components with proper typing
+  const PrevArrow = ({ onClick }: ArrowProps) => {
+    return (
+      <div className="slick-arrow slick-prev" onClick={onClick}>
+        ←
+      </div>
+    );
+  };
+
+  const NextArrow = ({ onClick }: ArrowProps) => {
+    return (
+      <div className="slick-arrow slick-next" onClick={onClick}>
+        →
+      </div>
+    );
+  };
 
   const settings = {
     infinite: false,
@@ -49,9 +71,9 @@ const ProductCarousel = ({ products }: { products: Product[] }) => {
         },
       },
     ],
-    prevArrow: <div className="slick-arrow slick-prev">←</div>,  // Left arrow (<-)
-    nextArrow: <div className="slick-arrow slick-next">→</div>,  // Right arrow (->)
-    dots: false,  // Disable dots
+    prevArrow: <PrevArrow />, // Use custom PrevArrow component
+    nextArrow: <NextArrow />, // Use custom NextArrow component
+    dots: false, // Disable dots
   };
 
   return (

@@ -9,15 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/runtime": "^7.26.10",
     "@paypal/react-paypal-js": "^8.8.2",
     "@supabase/supabase-js": "^2.49.1",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "e-commerce-store": "file:",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "next": "^15.1.7",
+    "next": "^15.2.3",
     "pg": "^8.13.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
