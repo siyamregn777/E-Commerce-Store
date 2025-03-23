@@ -73,7 +73,7 @@ const ProductCarousel = ({ products }: { products: Product[] }) => {
     ],
     prevArrow: <PrevArrow />, // Use custom PrevArrow component
     nextArrow: <NextArrow />, // Use custom NextArrow component
-    dots: false, // Disable dots
+    dots: false,
   };
 
   return (
