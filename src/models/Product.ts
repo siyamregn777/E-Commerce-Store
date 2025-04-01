@@ -211,8 +211,7 @@ export const deleteProduct = async (id: string) => {
 };
 
 export const fetchProductById = async (id: string): Promise<Product> => {
-  // Remove the localhost fallback - it should never be used in production
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   if (!baseUrl) {
     throw new Error('BASE_URL environment variable is not set');
   }

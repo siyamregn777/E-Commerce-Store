@@ -20,7 +20,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="product-details-container">
+    <div  className="product-details-container pt-16">
       <h1 className="product-name">{product.name}</h1>
       <ProductImage
         src={product.image_url}

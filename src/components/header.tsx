@@ -7,11 +7,13 @@ import { useUser } from '@/context/userContext';
 import Image from 'next/image';
 import image1 from '../../public/images (2).png';
 
-const Header = ({ isVisible }: { isVisible: boolean }) => {
+const Header = () => {
   const { user, setUser } = useUser();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [visible, setVisible] = useState(true);
   const dropdownRef = useRef<HTMLLIElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -20,6 +22,26 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
     setUser({ userId: null, username: null, email: null, isAuthenticated: false, role: null });
     router.push('/login');
   };
+
+  // Control header visibility on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past 100px
+        setVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   // Close dropdown and menu when clicking outside
   useEffect(() => {
@@ -40,8 +62,8 @@ const Header = ({ isVisible }: { isVisible: boolean }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg z-50 transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+      className={`fixed top-0 left-0 w-full bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg z-50 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">

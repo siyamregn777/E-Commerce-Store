@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Product } from '../../../types/Product';
 import './product.css';
-import { useUser } from '@/context/userContext'; // Import the useUser hook
+import { useUser } from '@/context/userContext';
 
 interface BuyNowButtonProps {
   product: Product;
@@ -13,26 +13,23 @@ interface BuyNowButtonProps {
 export default function BuyNowButton({ product }: BuyNowButtonProps) {
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
-  const { user } = useUser(); // Get the user from the context
+  const { user } = useUser();
 
-  const handleBuyNow = () => {
-    // Check if the user is logged in
-    if (!user || !user.isAuthenticated) {
-      // Redirect to the login page if not logged in
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!user?.isAuthenticated) {
       router.push('/login');
       return;
     }
 
-    // Calculate total price
     const totalPrice = (product.price * quantity).toFixed(2);
-
-    // Redirect to the payment page if logged in
-    const paymentUrl = `/payment?productId=${product.id}&quantity=${quantity}&totalPrice=${totalPrice}`;
-    router.push(paymentUrl);
+    router.push(`/payment?productId=${product.id}&quantity=${quantity}&totalPrice=${totalPrice}`);
   };
 
   return (
-    <>
+    <div className="buy-now-container">
       <div className="quantity-selector">
         <label htmlFor="quantity">Quantity:</label>
         <input
@@ -41,15 +38,19 @@ export default function BuyNowButton({ product }: BuyNowButtonProps) {
           name="quantity"
           value={quantity}
           min="1"
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
         />
       </div>
 
       <p className="total-price">Total: ${(product.price * quantity).toFixed(2)}</p>
 
-      <button className="buy-now-btn" onClick={handleBuyNow}>
+      <button 
+        className="buy-now-btn" 
+        onClick={handleBuyNow}
+        onMouseDown={(e) => e.preventDefault()} // Prevent focus styles from affecting layout
+      >
         Buy Now
       </button>
-    </>
+    </div>
   );
 }
