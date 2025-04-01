@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import { UserProvider } from '../context/userContext'; // Adjust the path as necessary
 import Header from '../components/header';
 import Footer from '@/components/footer';
