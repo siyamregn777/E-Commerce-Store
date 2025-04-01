@@ -211,15 +211,19 @@ export const deleteProduct = async (id: string) => {
 };
 
 export const fetchProductById = async (id: string): Promise<Product> => {
-  // Use the full URL for the API request
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const response = await fetch(`${baseUrl}/api/product/${id}`);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch product');
+  // Remove the localhost fallback - it should never be used in production
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  if (!baseUrl) {
+    throw new Error('BASE_URL environment variable is not set');
   }
 
-  const data = await response.json();
-  console.log('Fetched Product Data:', data); // Debugging
-  return data;
+  const response = await fetch(`${baseUrl}/api/product/${id}`, {
+    cache: 'no-store' // Important for dynamic data
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch product: ${response.statusText}`);
+  }
+
+  return response.json();
 };
