@@ -7,7 +7,6 @@ import { fetchProducts } from '@/models/Product';
 import { Product } from '@/types/Product';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-// Array of hero images for the slideshow
 const heroImages = [
   { src: '/arturo-rey-5yP83RhaFGA-unsplash.jpg', alt: 'Welcome to E-Commerce Store' },
   { src: '/blake-wisz-Xn5FbEM9564-unsplash.jpg', alt: 'Summer Collection' },
